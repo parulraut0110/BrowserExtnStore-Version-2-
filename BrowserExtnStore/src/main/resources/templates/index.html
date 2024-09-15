@@ -73,7 +73,7 @@
     	<div class="main" >	
 			<div id="searchResults" th:if="${searchResults}">
 				 <div style="text-align: center;"><h4>Searched for : <span th:text="${searchData.search}"></span></h4></div>
-    			 <table id='search-table'>
+    			 <table class='search-table' style="background-color: aqua;">
 				<thead>
 					<tr>
 						<th>extension</th>
@@ -160,5 +160,36 @@
 		});
 	</script>
 	
+	<script> 
+			document.addEventListener('DOMContentLoaded', function() {
+			  const cells = document.querySelectorAll('.search-table td:nth-child(2)');
+			
+			  cells.forEach(cell => {
+			    // Check if the text is overflowing
+			    if (cell.scrollHeight > cell.clientHeight) {
+			      // Create "Read More" element
+			      const readMore = document.createElement('span');
+			      readMore.textContent = 'Read More';
+			      readMore.className = 'read-more';
+			
+			      // Use insertAdjacentElement to place the "Read More" after existing content
+			      cell.insertAdjacentElement('beforeend', readMore);
+			
+			      // Handle click event
+			      readMore.addEventListener('click', () => {
+			        if (cell.classList.contains('expanded')) {
+			          cell.classList.remove('expanded');
+			          readMore.textContent = 'Read More';
+			        } else {
+			          cell.classList.add('expanded');
+			          readMore.textContent = 'Read Less';
+			        }
+			      });
+			    }
+			  });
+			});
+
+
+	</script>
 </body>
 </html>
