@@ -73,7 +73,7 @@
     	<div class="main" >	
 			<div id="searchResults" th:if="${searchResults}">
 				 <div style="text-align: center;"><h4>Searched for : <span th:text="${searchData.search}"></span></h4></div>
-    			 <table class='search-table' style="background-color: aqua;">
+    			 <table class='search-table'>
 				<thead>
 					<tr>
 						<th>extension</th>
@@ -160,36 +160,57 @@
 		});
 	</script>
 	
-	<script> 
-			document.addEventListener('DOMContentLoaded', function() {
-			  const cells = document.querySelectorAll('.search-table td:nth-child(2)');
-			
-			  cells.forEach(cell => {
-			    // Check if the text is overflowing
-			    if (cell.scrollHeight > cell.clientHeight) {
-			      // Create "Read More" element
-			      const readMore = document.createElement('span');
-			      readMore.textContent = 'Read More';
-			      readMore.className = 'read-more';
-			
-			      // Use insertAdjacentElement to place the "Read More" after existing content
-			      cell.insertAdjacentElement('beforeend', readMore);
-			
-			      // Handle click event
-			      readMore.addEventListener('click', () => {
-			        if (cell.classList.contains('expanded')) {
-			          cell.classList.remove('expanded');
-			          readMore.textContent = 'Read More';
-			        } else {
-			          cell.classList.add('expanded');
-			          readMore.textContent = 'Read Less';
-			        }
-			      });
-			    }
-			  });
-			});
+	<script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const cells = document.querySelectorAll('.search-table td:nth-child(2)');
+
+        cells.forEach((cell) => {
+          const originalText = cell.textContent.trim();
+
+          if (originalText.length > 100) {
+            const truncatedText = originalText.substring(0, 100);
+            const remainingText = originalText.substring(100);
 
 
-	</script>
+            const readMoreLink = document.createElement('span');
+            readMoreLink.innerHTML =
+              '<a class="read-more-link">... read more</a>';
+            readMoreLink.style.textDecoration = 'none';
+
+           
+            const remainingSpan = document.createElement('span');
+            remainingSpan.textContent = remainingText;
+            remainingSpan.style.display = 'none'; // Initially hidden
+
+
+            const showLessLink = document.createElement('span');
+            showLessLink.innerHTML =
+              '<a class="show-less-link">... show less</a>';
+            showLessLink.style.textDecoration = 'none';
+            showLessLink.style.display = 'none'; // Initially hidden
+
+            cell.innerHTML = truncatedText;
+            cell.append(readMoreLink);
+            cell.append(remainingSpan);
+            cell.append(showLessLink);
+            
+            readMoreLink.addEventListener('click', function (e) {
+              e.preventDefault();
+              readMoreLink.style.display = 'none'; // Hide "read more"
+              remainingSpan.style.display = 'inline'; // Show remaining text
+              showLessLink.style.display = 'inline'; // Show "show less"
+            });
+
+
+            showLessLink.addEventListener('click', function (e) {
+              e.preventDefault();
+              remainingSpan.style.display = 'none'; // Hide remaining text
+              showLessLink.style.display = 'none'; // Hide "show less"
+              readMoreLink.style.display = 'inline'; // Show "read more"
+            });
+          }
+        });
+      });
+    </script>
 </body>
 </html>

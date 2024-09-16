@@ -47,7 +47,7 @@ body {
     text-align: center;
     padding: 10px;
     display : inline-flex;
-	  flex-direction: row;
+	flex-direction: row;
 }
 
 .sidebar {
@@ -146,76 +146,47 @@ body {
 .search-table th:nth-child(1),
 .search-table td:nth-child(1) {
     width: 15%;
-    background-color: yellow;
+    background-color: inherit;
 }
 
 .search-table th:nth-child(2),
 .search-table td:nth-child(2) {
-    width: 40%; /* Allocate more space to the description column */
-    background-color: red;
-    padding: 10px;
+    width: 40%; 
+    background-color: inherit;
 }
 
 .search-table th:nth-child(3),
 .search-table td:nth-child(3) {
     width: 15%; /* Give fixed width to non-description columns */
-    background-color: #feb47b;
+    background-color: inherit;
 }
 
 
 .search-table th:nth-child(4),
 .search-table td:nth-child(4) {
     width: 15%; /* Give fixed width to non-description columns */
-    background-color: violet;
+    background-color: inherit;
 }
 
 .search-table th:nth-child(5),
 .search-table td:nth-child(5) {
     width: 15%; /* Give fixed width to non-description columns */
-    background-color: greenyellow;
+    background-color: inherit;
+}
+
+.read-more-link {
+	color: limegreen;
+}
+
+.read-more-link:hover {
+	cursor: pointer;
+}
+
+.show-less-link {
+	color: dodgerblue;
 }
 
 
-
-.search-table td:nth-child(2) {
-    background-color: red; /* Example background color */
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3; /* Limit the text to 3 lines */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Show ellipsis for overflowing text */
-    white-space: normal;
-    word-wrap: break-word;
-   	width: 98%;
-    padding: 10px;
-    max-height: 3.3em;
-  	position: relative;
-}
-
-.search-table td:nth-child(2) {
-  background-color: red; /* Example background color */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Limit the text to 3 lines */
-  overflow: hidden;
-  text-overflow: ellipsis; /* Show ellipsis for overflowing text */
-  white-space: normal;
-  word-wrap: break-word;
-  width: 98%;
-  padding: 10px;
-  max-height: calc(3 * 1.2em); /* Adjust based on your line-height */
-  position: relative;
-}
-
-.read-more {
-  display: none; /* Hidden by default */
-  cursor: pointer;
-  color: blue;
-  text-decoration: underline;
-}
-
-.expanded {
-  -webkit-line-clamp: unset; /* Remove the line clamp */
-  overflow: visible; /* Show overflowed text */
-  white-space: normal;
+.show-less-link:hover {
+	cursor: pointer;
 }
