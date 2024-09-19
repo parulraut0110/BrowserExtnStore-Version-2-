@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Query</title>
+</head>
+<body>
+    <h4>Searched for : <span th:text="${searchData.search}"></span></h4>
+    <table id='search-table' style="width: 50%;  border-spacing: 5px 0;">
+		<thead>
+			<tr>
+				<th id='search-col1' style='width:30%; background-color: rgb(219, 255, 255); '>Extension Name</th>
+				<th id='search-col2' style='width:70%; background-color: rgb(219, 255, 255); '>Extension Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "result : ${searchResults}">
+				<td style="background-color: rgb(219, 255, 255)" th:text="${result[0]}"></td>
+				<td style="background-color: rgb(219, 255, 255)" th:text="${result[1]}"></td>
+			 </tr>
+		</tbody>
+	</table>
+	
+</body>
+</html>
