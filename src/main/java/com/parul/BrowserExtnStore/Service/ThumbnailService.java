@@ -24,6 +24,7 @@ public class ThumbnailService {
 		thumbnail.setRaters(0);
 		Binary thumbnailData = new Binary(Files.readAllBytes(Paths.get("C:\\Users\\parul\\Downloads\\Dark_Mode_Logo.png")));
 		thumbnail.setThumbnail(thumbnailData);
+		thumbnail.setMIMEType("data:image/png;base64");
 		thumbRepo.save(thumbnail);
 		System.out.println("Entered Successfully");
 	}

@@ -6,7 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.parul.BrowserExtnStore.Entity.Thumbnail;
 
 @Repository
-public interface ThumbnailRepository extends MongoRepository<Thumbnail, String> {
-	
-	
-}
+public interface ThumbnailRepository extends MongoRepository<Thumbnail, String> { }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.List;
 
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +17,7 @@ import com.parul.BrowserExtnStore.dto.SearchResultDTO;
 public interface ExtensionRepo extends JpaRepository<ExtensionEntity, Integer> {
 
 
-	@Query(value = "SELECT extensionName, description " +
+	@Query(value = "SELECT serialNo, extensionName, description, browserLink, versionNo, extension " + 
 			"FROM extensions " +
 			"WHERE MATCH(extensionName, description) " +
 			"AGAINST (?1 WITH QUERY EXPANSION)",

@@ -12,20 +12,19 @@ import org.springframework.data.mongodb.core.mapping.FieldType;
 public class Thumbnail {
 	@Id 
 	//@Field(targetType = FieldType.INT32, value = "x")
-	private ObjectId id = new ObjectId("66ec5a5e0c7c60e7b5d6c00b");
-	private String imgName;
+	private String id;
+	private String imgName;    
 	private String serialNo;
 	private String[] reviews;
 	private Binary thumbnail;
 	private int raters;
 	private float rating;
+	private String MIMEType;
 	
-	public ObjectId getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
+	
 	public String getImgName() {
 		return imgName;
 	}
@@ -62,6 +61,13 @@ public class Thumbnail {
 	public void setRating(float rating) {
 		this.rating = rating;
 	}
-	
+
+	public String getMIMEType() {
+		return MIMEType;
+	}
+
+	public void setMIMEType(String mIMEType) {
+		MIMEType = mIMEType;
+	}
 	
 }
