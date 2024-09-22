@@ -103,11 +103,13 @@
 				</thead>
 				<tbody>
 					<tr th:each = "result : ${searchResults}">
-						<td th:text="${result[0]}"></td>
-						<td th:text="${result[1]}"></td>
-						<td th:text="${result[0]}"></td>
-						<td th:text="${result[0]}"></td>
-						<td th:text="${result[0]}"></td>
+						<td th:text="${result.extensionName}"></td>
+						<td th:text="${result.description}"></td>
+						<td>
+    						<a th:href="${result.browserLink}" th:text="${result.browserLink}"></a>
+						</td>
+						<td th:text="${result.extensionName}"></td>
+						<td th:text="${result.extensionName}"></td>
 						
 			 		</tr>
 				</tbody>

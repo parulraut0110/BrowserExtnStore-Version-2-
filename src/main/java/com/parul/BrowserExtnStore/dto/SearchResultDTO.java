@@ -4,12 +4,49 @@ package com.parul.BrowserExtnStore.dto;
 import java.util.ArrayList;
 
 import org.bson.types.Binary;
+import jakarta.persistence.SqlResultSetMapping;
+import jakarta.persistence.ConstructorResult;
+import jakarta.persistence.ColumnResult;
 
+
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQuery;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "extensions")
+@SqlResultSetMapping(
+    name = "SearchResultDTOMapping",
+    classes = @ConstructorResult(
+        targetClass = SearchResultDTO.class,
+        columns = {
+            @ColumnResult(name = "serialNo", type = Integer.class),
+            @ColumnResult(name = "extensionName", type = String.class),
+            @ColumnResult(name = "description", type = String.class),
+            @ColumnResult(name = "browserLink", type = String.class),
+            @ColumnResult(name = "versionNo", type = String.class),
+            @ColumnResult(name = "extension", type = byte[].class)
+        }
+    )
+)
+@NamedNativeQuery(
+    name = "ExtensionEntity.findSearchResults",
+    query = "SELECT serialNo, extensionName, description, browserLink, versionNo, extension " + 
+            "FROM extensions " +
+            "WHERE MATCH(extensionName, description) " +
+            "AGAINST (?1 WITH QUERY EXPANSION)",
+    resultSetMapping = "SearchResultDTOMapping"
+)
+
 public class SearchResultDTO {
 	//Fields for mysql
+	@Id
 	private int serialNo;
     private String extensionName;
     private String description;
@@ -17,13 +54,24 @@ public class SearchResultDTO {
     private String versionNo;
     private byte[] extension;
 
-    
     //Fields for mongodb
 	private String[] reviews;
 	private Binary thumbnail;
 	private int raters;
 	private float rating;
-	private String MINEType;
+	private String mimeType;
+	
+	
+	public SearchResultDTO(int serialNo, String extensionName, String description, String browserLink, String versionNo,
+			byte[] extension) {
+		super();
+		this.serialNo = serialNo;
+		this.extensionName = extensionName;
+		this.description = description;
+		this.browserLink = browserLink;
+		this.versionNo = versionNo;
+		this.extension = extension;
+	}
 	
 	
 	public int getSerialNo() {
@@ -86,13 +134,11 @@ public class SearchResultDTO {
 	public void setRating(float rating) {
 		this.rating = rating;
 	}
-	public String getMINEType() {
-		return MINEType;
+	public String getMimeType() {
+		return mimeType;
 	}
-	public void setMINEType(String mINEType) {
-		MINEType = mINEType;
+	public void setMimeType(String mimeType) {
+		mimeType = mimeType;
 	}
-
-	
 	
 }

@@ -2,7 +2,6 @@ package com.parul.BrowserExtnStore.Entity;
 
 
 import java.io.InputStream;
-
 import java.sql.Date;
 
 import jakarta.persistence.*;

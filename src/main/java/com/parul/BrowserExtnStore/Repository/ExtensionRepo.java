@@ -17,12 +17,9 @@ import com.parul.BrowserExtnStore.dto.SearchResultDTO;
 public interface ExtensionRepo extends JpaRepository<ExtensionEntity, Integer> {
 
 
-	@Query(value = "SELECT serialNo, extensionName, description, browserLink, versionNo, extension " + 
-			"FROM extensions " +
-			"WHERE MATCH(extensionName, description) " +
-			"AGAINST (?1 WITH QUERY EXPANSION)",
+	@Query(name = "ExtensionEntity.findSearchResults",
 			nativeQuery = true)
-	List<Object[]> findInExtensionsStore(String searchQuery);
+	List<SearchResultDTO> findInExtensionsStore(String searchQuery);
 
 
 

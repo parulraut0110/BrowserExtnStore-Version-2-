@@ -19,4 +19,5 @@ public class ThumbnailController {
 		System.out.println("Reached Controller");
 		service.saveThumbnail();
 	}
+	
 }

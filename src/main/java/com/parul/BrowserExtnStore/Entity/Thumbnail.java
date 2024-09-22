@@ -19,12 +19,11 @@ public class Thumbnail {
 	private Binary thumbnail;
 	private int raters;
 	private float rating;
-	private String MIMEType;
+	private String mimeType;
 	
 	public String getId() {
 		return id;
-	}
-	
+	}	
 	public String getImgName() {
 		return imgName;
 	}
@@ -62,12 +61,12 @@ public class Thumbnail {
 		this.rating = rating;
 	}
 
-	public String getMIMEType() {
-		return MIMEType;
+	public String getMimeType() {
+		return mimeType;
 	}
 
-	public void setMIMEType(String mIMEType) {
-		MIMEType = mIMEType;
+	public void setMimeType(String mimeType) {
+		mimeType = mimeType;
 	}
 	
 }
