@@ -13,8 +13,7 @@ public class Thumbnail {
 	@Id 
 	//@Field(targetType = FieldType.INT32, value = "x")
 	private String id;
-	private String imgName;    
-	private String serialNo;
+	private int serialNo;
 	private String[] reviews;
 	private Binary thumbnail;
 	private int raters;
@@ -24,16 +23,10 @@ public class Thumbnail {
 	public String getId() {
 		return id;
 	}	
-	public String getImgName() {
-		return imgName;
-	}
-	public void setImgName(String imgName) {
-		this.imgName = imgName;
-	}
-	public String getSerialNo() {
+	public int getSerialNo() {
 		return serialNo;
 	}
-	public void setSerialNo(String serialNo) {
+	public void setSerialNo(int  serialNo) {
 		this.serialNo = serialNo;
 	}
 	public String[] getReviews() {

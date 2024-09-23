@@ -103,7 +103,9 @@
 				</thead>
 				<tbody>
 					<tr th:each = "result : ${searchResults}">
-						<td th:text="${result.extensionName}"></td>
+						<td>
+    						<img th:src="'data:image/png;base64,' + '${result.thumbnail.getData()}'" alt="Image" />
+						</td>
 						<td th:text="${result.description}"></td>
 						<td>
     						<a th:href="${result.browserLink}" th:text="${result.browserLink}"></a>

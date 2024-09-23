@@ -28,6 +28,7 @@ public class SearchController {
 		System.out.println("searchQuery: " + searchQuery);
 		List<SearchResultDTO> searchResults = extensionRepo.findInExtensionsStore(searchDataObj.getSearch());
 		System.out.println("Results: " + searchResults.get(0).getExtensionName() + " " + searchResults.get(0).getDescription());
+		System.out.println("serialNo : " + searchResults.get(0).getSerialNo());
 		service.findInThumnailRepo(searchResults);
 		model.addAttribute("searchResults", searchResults);
 		return "index";
