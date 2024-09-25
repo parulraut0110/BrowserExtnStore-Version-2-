@@ -103,15 +103,15 @@
 				</thead>
 				<tbody>
 					<tr th:each = "result : ${searchResults}">
-						<td>
-    						<img th:src="'data:image/png;base64,' + '${result.thumbnail.getData()}'" alt="Image" />
-						</td>
+						
+							<!-- <img th:src="'data:' + ${result.mimeType} + ';base64,' + ${thumbnail}" alt="Image" /> -->
+							<td th:text="${result.thumbnail.getData()[3]}"></td>
 						<td th:text="${result.description}"></td>
 						<td>
     						<a th:href="${result.browserLink}" th:text="${result.browserLink}"></a>
 						</td>
-						<td th:text="${result.extensionName}"></td>
-						<td th:text="${result.extensionName}"></td>
+						<td th:text="${result.thumbnail.length()}"></td>
+						<td th:text="${result.reviews[1]}"></td>
 						
 			 		</tr>
 				</tbody>

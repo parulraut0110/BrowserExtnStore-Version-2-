@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.bson.types.Binary;
 import jakarta.persistence.SqlResultSetMapping;
 import jakarta.persistence.ConstructorResult;
+import jakarta.persistence.Column;
 import jakarta.persistence.ColumnResult;
 
 
@@ -14,6 +15,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -49,9 +51,14 @@ public class SearchResultDTO {
 	@Id
 	private int serialNo;
     private String extensionName;
+    
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+    
     private String browserLink;
     private String versionNo;
+    @Lob
+    @Column(name = "extension", columnDefinition = "MEDIUMBLOB")
     private byte[] extension;
 
     //Fields for mongodb

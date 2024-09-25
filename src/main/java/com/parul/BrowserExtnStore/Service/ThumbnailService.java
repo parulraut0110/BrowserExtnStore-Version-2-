@@ -47,11 +47,14 @@ public class ThumbnailService {
 			dto.setThumbnail(thumbnail.getThumbnail());
 			dto.setRaters(thumbnail.getRaters());
 			dto.setRating(thumbnail.getRating());
-			//dto.setMimeType(thumbnail.getMimeType());
-			System.out.println("thumbnail: " + thumbnail.getThumbnail().getData());
+			dto.setMimeType(thumbnail.getMimeType());
+			System.out.println("thumbnail: " + thumbnail.getThumbnail().getData().length);
+			System.out.println("thumbnail: " + thumbnail.getThumbnail().getData().length);
 			System.out.println("rating : " + thumbnail.getRating());
 			System.out.println("review1 : " + thumbnail.getReviews()[1]);
 			System.out.println("raters : " + thumbnail.getRaters());
+			System.out.println("mimeType : " + thumbnail.getMimeType());
+
 		}
 		return dtos;
 	}
