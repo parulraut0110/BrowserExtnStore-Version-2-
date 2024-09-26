@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import org.bson.types.Binary;
@@ -42,9 +43,11 @@ public class ThumbnailService {
 		for(SearchResultDTO dto : dtos) {
 			Query query = new Query();
 			query.addCriteria(Criteria.where("serialNo").is(dto.getSerialNo()));
-			Thumbnail thumbnail = mongoTemplate.findOne(query, Thumbnail.class);
+			//Thumbnail thumbnail = mongoTemplate.findOne(query, Thumbnail.class);
+			dto = mongoTemplate.findOne(query, SearchResultDTO.class);
+			/*
 			dto.setReviews(thumbnail.getReviews());
-			dto.setThumbnail(thumbnail.getThumbnail());
+			dto.setThumbnailBase64(Base64.getEncoder().encodeToString(thumbnail.getThumbnail().getData()));
 			dto.setRaters(thumbnail.getRaters());
 			dto.setRating(thumbnail.getRating());
 			dto.setMimeType(thumbnail.getMimeType());
@@ -54,7 +57,7 @@ public class ThumbnailService {
 			System.out.println("review1 : " + thumbnail.getReviews()[1]);
 			System.out.println("raters : " + thumbnail.getRaters());
 			System.out.println("mimeType : " + thumbnail.getMimeType());
-
+			 */
 		}
 		return dtos;
 	}

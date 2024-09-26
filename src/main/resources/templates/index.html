@@ -98,19 +98,24 @@
 						<th>description</th>
 						<th>link</th>
 						<th>rating</th>
-						<th>feedback</th>
+						<th>reviews</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each = "result : ${searchResults}">
-						
-							<!-- <img th:src="'data:' + ${result.mimeType} + ';base64,' + ${thumbnail}" alt="Image" /> -->
-							<td th:text="${result.thumbnail.getData()[3]}"></td>
+						<td>
+							<div>
+	            				<img id="thumbnail" th:src="'data:' + ${result.mimeType} + ';base64,' + ${result.thumbnailBase64}" alt="Image" style="height: 60px; width: 60px; padding-left: 20px;" />
+	        				</div>
+	       					<div style="margin:15px; text-align: center;">
+	        				    <span th:text="${result.extensionName}"></span>
+	       					</div>	
+       					</td>
 						<td th:text="${result.description}"></td>
 						<td>
-    						<a th:href="${result.browserLink}" th:text="${result.browserLink}"></a>
+    						<a th:href="${result.browserLink}">Click here...</a>
 						</td>
-						<td th:text="${result.thumbnail.length()}"></td>
+						<td th:text="${result.thumbnailBase64.length()}"></td>
 						<td th:text="${result.reviews[1]}"></td>
 						
 			 		</tr>

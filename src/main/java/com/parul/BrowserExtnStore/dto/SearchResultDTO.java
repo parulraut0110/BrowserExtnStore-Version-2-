@@ -45,7 +45,7 @@ import lombok.NoArgsConstructor;
             "AGAINST (?1 WITH QUERY EXPANSION)",
     resultSetMapping = "SearchResultDTOMapping"
 )
-
+@Data
 public class SearchResultDTO {
 	//Fields for mysql
 	@Id
@@ -63,7 +63,7 @@ public class SearchResultDTO {
 
     //Fields for mongodb
 	private String[] reviews;
-	private Binary thumbnail;
+	private String thumbnailBase64;
 	private int raters;
 	private float rating;
 	private String mimeType;
@@ -123,11 +123,11 @@ public class SearchResultDTO {
 	public void setReviews(String[] reviews) {
 		this.reviews = reviews;
 	}
-	public Binary getThumbnail() {
-		return thumbnail;
+	public String getThumbnailBase64() {
+		return thumbnailBase64;
 	}
-	public void setThumbnail(Binary thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setThumbnailBase64(String thumbnailBase64) {
+		this.thumbnailBase64 = thumbnailBase64;
 	}
 	public int getRaters() {
 		return raters;

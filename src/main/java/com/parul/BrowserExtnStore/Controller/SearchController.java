@@ -30,7 +30,8 @@ public class SearchController {
 		System.out.println("Results: " + searchResults.get(0).getExtensionName() + " " + searchResults.get(0).getDescription());
 		System.out.println("serialNo : " + searchResults.get(0).getSerialNo());
 		searchResults = service.findInThumnailRepo(searchResults);
-		System.out.println("thumbnail size : " + searchResults.get(0).getThumbnail().length());
+		
+		System.out.println("thumbnail size : " + searchResults.get(0).getThumbnailBase64().length());
 		model.addAttribute("searchResults", searchResults);
 		return "index";
 	}

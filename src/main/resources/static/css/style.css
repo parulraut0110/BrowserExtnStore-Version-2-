@@ -133,6 +133,13 @@ body {
     width: 90%; /* Set the table width to 90% of the container */
     margin: 0 auto; /* Center the table */
     border-spacing: 5px 0; /* Add space between cells */
+    
+}
+
+.search-table th{
+	text-align: center;
+	margin-left: 40px;
+	color: red;
 }
 
 .search-table th, 
@@ -189,4 +196,9 @@ body {
 
 .show-less-link:hover {
 	cursor: pointer;
+}
+
+#thumbnail img {
+	height: 60px; 
+	width: 60px;
 }
