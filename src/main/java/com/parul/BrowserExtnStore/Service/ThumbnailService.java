@@ -43,9 +43,7 @@ public class ThumbnailService {
 		for(SearchResultDTO dto : dtos) {
 			Query query = new Query();
 			query.addCriteria(Criteria.where("serialNo").is(dto.getSerialNo()));
-			//Thumbnail thumbnail = mongoTemplate.findOne(query, Thumbnail.class);
-			dto = mongoTemplate.findOne(query, SearchResultDTO.class);
-			/*
+			Thumbnail thumbnail = mongoTemplate.findOne(query, Thumbnail.class);
 			dto.setReviews(thumbnail.getReviews());
 			dto.setThumbnailBase64(Base64.getEncoder().encodeToString(thumbnail.getThumbnail().getData()));
 			dto.setRaters(thumbnail.getRaters());
@@ -57,7 +55,7 @@ public class ThumbnailService {
 			System.out.println("review1 : " + thumbnail.getReviews()[1]);
 			System.out.println("raters : " + thumbnail.getRaters());
 			System.out.println("mimeType : " + thumbnail.getMimeType());
-			 */
+			
 		}
 		return dtos;
 	}
