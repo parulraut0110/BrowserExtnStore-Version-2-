@@ -17,7 +17,7 @@ public class Thumbnail {
 	private String[] reviews;
 	private Binary thumbnail;
 	private int raters;
-	private float rating;
+	private int[] ratings;
 	private String mimeType;
 	
 	public String getId() {
@@ -47,11 +47,11 @@ public class Thumbnail {
 	public void setRaters(int raters) {
 		this.raters = raters;
 	}
-	public float getRating() {
-		return rating;
+	public int[] getRatings() {
+		return ratings;
 	}
-	public void setRating(float rating) {
-		this.rating = rating;
+	public void setRatings(int[] ratings) {
+		this.ratings = ratings;
 	}
 
 	public String getMimeType() {
@@ -59,7 +59,7 @@ public class Thumbnail {
 	}
 
 	public void setMimeType(String mimeType) {
-		mimeType = mimeType;
+		this.mimeType = mimeType;
 	}
 	
 }

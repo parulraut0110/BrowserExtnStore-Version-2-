@@ -30,7 +30,7 @@ public class ThumbnailService {
 	public void saveThumbnail() throws IOException {
 		Thumbnail thumbnail = new Thumbnail();
 		thumbnail.setSerialNo(1);
-		thumbnail.setRating(0.0F);
+		thumbnail.setRatings(new int[] {10, 20, 30, 40, 50});
 		thumbnail.setRaters(0);
 		Binary thumbnailData = new Binary(Files.readAllBytes(Paths.get("C:\\Users\\parul\\Downloads\\Dark_Mode_Logo.png")));
 		thumbnail.setThumbnail(thumbnailData);
@@ -47,11 +47,13 @@ public class ThumbnailService {
 			dto.setReviews(thumbnail.getReviews());
 			dto.setThumbnailBase64(Base64.getEncoder().encodeToString(thumbnail.getThumbnail().getData()));
 			dto.setRaters(thumbnail.getRaters());
-			dto.setRating(thumbnail.getRating());
+			int[] ratings = thumbnail.getRatings();	
+			float rating = ((float)ratings[0] + 2*ratings[1] + 3*ratings[2] + 4*ratings[3] + 5*ratings[4])/thumbnail.getRaters();
+			dto.setRating(rating);
 			dto.setMimeType(thumbnail.getMimeType());
 			System.out.println("thumbnail: " + thumbnail.getThumbnail().getData().length);
 			System.out.println("thumbnail: " + thumbnail.getThumbnail().getData().length);
-			System.out.println("rating : " + thumbnail.getRating());
+			System.out.println("rating : " + dto.getRating());
 			System.out.println("review1 : " + thumbnail.getReviews()[1]);
 			System.out.println("raters : " + thumbnail.getRaters());
 			System.out.println("mimeType : " + thumbnail.getMimeType());

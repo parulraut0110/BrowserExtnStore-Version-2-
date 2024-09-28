@@ -172,7 +172,6 @@ body {
 
 }
 
-
 .search-table th:nth-child(4),
 .search-table td:nth-child(4) {
     width: 15%; /* Give fixed width to non-description columns */
@@ -192,13 +191,13 @@ body {
 	color: dodgerblue;
 }
 
-
 .show-less-link:hover {
 	cursor: pointer;
 }
 
 #thumbnail {
-	margin:auto;
+	margin-left:auto;
+	margin-right: auto;
 	height: 50px; 
 	width: 50px;
 	padding-left: 10px;

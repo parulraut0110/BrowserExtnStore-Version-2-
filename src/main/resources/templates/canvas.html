@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Horizontal Line Graph</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="lineGraph" width="600" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('lineGraph');
+        const ctx = canvas.getContext('2d');
+
+        // Data for the graph (values should be between 0 and 100)
+        const dataPoints = [20, 40, 30, 80, 60, 90, 70];
+        
+        // Graph dimensions and styling
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        const padding = 50;
+        const graphHeight = canvasHeight - padding * 2;
+        const graphWidth = canvasWidth - padding * 2;
+
+        // Draw horizontal grid lines
+        function drawGridLines() {
+            ctx.strokeStyle = "#ddd";
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i <= 10; i++) {
+                const y = padding + (graphHeight / 10) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvasWidth - padding, y);
+                ctx.stroke();
+            }
+        }
+
+        // Draw line graph
+        function drawLineGraph() {
+            const stepX = graphWidth / (dataPoints.length - 1);  // Distance between points
+
+            ctx.strokeStyle = "#ff0000";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            // Map first point to canvas
+            ctx.moveTo(padding, padding + graphHeight - (dataPoints[0] / 100) * graphHeight);
+
+            // Map remaining points
+            for (let i = 1; i < dataPoints.length; i++) {
+                const x = padding + stepX * i;
+                const y = padding + graphHeight - (dataPoints[i] / 100) * graphHeight;
+                ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+
+        // Draw axes
+        function drawAxes() {
+            ctx.strokeStyle = "#000";
+            ctx.lineWidth = 2;
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvasHeight - padding);
+            ctx.stroke();
+
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, canvasHeight - padding);
+            ctx.lineTo(canvasWidth - padding, canvasHeight - padding);
+            ctx.stroke();
+        }
+
+        // Draw the entire graph
+        function drawGraph() {
+            drawGridLines();
+            drawAxes();
+            drawLineGraph();
+        }
+
+        drawGraph();
+    </script>
+</body>
+</html>
