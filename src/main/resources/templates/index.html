@@ -104,7 +104,7 @@
 					<tr th:each = "result : ${searchResults}">
 						<td>
 							<div>
-	            				<img id="thumbnail" th:src="'data:' + ${result.mimeType} + ';base64,' + ${result.thumbnailBase64}" alt="Image" style="height: 60px; width: 60px; padding-left: 20px;" />
+	            				<img id="thumbnail" th:src="'data:' + ${result.mimeType} + ';base64,' + ${result.thumbnailBase64}" alt="Image" th:onclick="'handleAppDetails(' + ${result.serialNo} + ')'"/>
 	        				</div>
 	       					<div style="margin:auto;">
 	        				    <span th:text="${result.extensionName}"></span>
@@ -240,5 +240,12 @@
         });
       });
     </script>
+    	
+    <script>
+    function handleAppDetails(id) {
+	   history.back();
+       window.location.href = "/details/" + id;
+    }
+</script>
 </body>
 </html>

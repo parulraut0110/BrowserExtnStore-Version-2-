@@ -8,6 +8,7 @@ import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.parul.BrowserExtnStore.Entity.ExtensionEntity;
@@ -21,6 +22,6 @@ public interface ExtensionRepo extends JpaRepository<ExtensionEntity, Integer> {
 			nativeQuery = true)
 	List<SearchResultDTO> findInExtensionsStore(String searchQuery);
 
-
-
+	@Query("SELECT s FROM ExtensionEntity s WHERE s.serialNo = :id") 
+	ExtensionEntity findAppDetailsInExtension(Integer id);
 }

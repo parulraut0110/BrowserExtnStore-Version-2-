@@ -158,6 +158,11 @@ body {
 
 }
 
+.search-table td:nth-child(1) img {
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .search-table th:nth-child(2),
 .search-table td:nth-child(2) {
     width: 40%; 
@@ -195,10 +200,15 @@ body {
 	cursor: pointer;
 }
 
-#thumbnail {
-	margin-left:auto;
+.search-table tbody tr td div img {
+	margin-left: auto;
 	margin-right: auto;
-	height: 50px; 
-	width: 50px;
-	padding-left: 10px;
+	display: block;
+	height: 40px;
+	width: 40;
+} 
+
+.search-table tbody tr td :hover{
+	background-color: #E9DABC;
+	cursor: pointer;
 }

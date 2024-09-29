@@ -8,10 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.parul.BrowserExtnStore.Entity.ExtensionEntity;
+import com.parul.BrowserExtnStore.Entity.Thumbnail;
 import com.parul.BrowserExtnStore.Model.SearchData;
 import com.parul.BrowserExtnStore.Repository.ExtensionRepo;
+import com.parul.BrowserExtnStore.Repository.ThumbnailRepository;
 import com.parul.BrowserExtnStore.Service.ThumbnailService;
 import com.parul.BrowserExtnStore.dto.SearchResultDTO;
 
@@ -19,6 +23,9 @@ import com.parul.BrowserExtnStore.dto.SearchResultDTO;
 public class SearchController {
 	@Autowired
 	ExtensionRepo extensionRepo;
+	
+	@Autowired
+	ThumbnailRepository thumbnailRepo;
 	
 	@Autowired
 	ThumbnailService service;
@@ -33,6 +40,19 @@ public class SearchController {
 		
 		System.out.println("thumbnail size : " + searchResults.get(0).getThumbnailBase64().length());
 		model.addAttribute("searchResults", searchResults);
+		return "index";
+	}
+	
+	@GetMapping("/details/{id}")
+	public String appDetails(@PathVariable int id, Model model) {
+		ExtensionEntity extensionResult = extensionRepo.findAppDetailsInExtension(id);
+		Thumbnail thumbnailResult = thumbnailRepo.findAppDetailsInThumbnail(id);
+		System.out.println("BrowserLink : " + extensionResult.getBrowserLink());
+		System.out.println("Description : " + extensionResult.getDescription());
+		System.out.println("MimeType : " + thumbnailResult.getMimeType());
+		System.out.println("reviews : " + thumbnailResult.getReviews()[1]);
+		model.addAttribute("extensionResult", extensionResult);
+		model.addAttribute("thumbnailResult", thumbnailResult);
 		return "index";
 	}
 }
