@@ -104,7 +104,7 @@
 					<tr th:each = "result : ${searchResults}">
 						<td>
 							<div>
-	            				<img id="thumbnail" th:src="'data:' + ${result.mimeType} + ';base64,' + ${result.thumbnailBase64}" alt="Image" th:onclick="'handleAppDetails(' + ${result.serialNo} + ')'"/>
+	            				<img class="thumbnail" th:src="'data:' + ${result.mimeType} + ';base64,' + ${result.thumbnailBase64}" alt="Image" th:onclick="'handleAppDetails(' + ${result.serialNo} + ')'"/>
 	        				</div>
 	       					<div style="margin:auto;">
 	        				    <span th:text="${result.extensionName}"></span>
@@ -123,6 +123,58 @@
 				</tbody>
 				</table>
 			</div>
+			
+			<div th:if="${appDetailsInStore}">
+			    <div id="appDetails" style="width:80%; margin-top:100px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+			        <img style="height: 50px; width: 50px;" th:src="${'data:' + appDetailsInThumbnail.mimeType + ';base64,' + thumbnailBase64}" alt="Image" />
+
+			        <span th:text="${appDetailsInStore.extensionName}"></span>
+			
+			        <table>
+			            <tr>
+			                <td th:text="${appDetailsInStore.description}" style="margin: auto;"></td>
+			            </tr>
+			            
+		            	<canvas id="myChart" style="width:100%; max-width: 400px;"></canvas>
+						
+						<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Make sure to include Chart.js library -->
+						<script>
+						    var yValues = ["5 star", "4 star", "3 star", "2 star", "1 star"];
+						    var xValues = [50, 40, 30, 20, 10];
+						    
+						    var totalRatings = xValues.reduce((a, b) => a + b, 0);
+						
+						    new Chart("myChart", {
+						        type: "bar",  // Horizontal bar has been deprecated
+						        data: {
+						            labels: yValues,
+						            datasets: [{
+						                backgroundColor: "Gold",  // Can be an array of colors too
+						                data: xValues
+						            }]
+						        },
+						        options: {
+						            indexAxis: 'y',  // This makes the bar chart horizontal
+						            legend: { display: false },
+						            title: {
+						                display: true,
+						                text: "Rating Breakdown"
+						            },
+						            scales: {
+						                x: {
+						                    min: 5,
+						                    max: 60
+						                }
+						            }
+						        }
+						    });
+						</script>
+
+												
+			        </table>
+			    </div>
+			</div>
+
 		</div>
   	</div>
 	
@@ -242,10 +294,15 @@
     </script>
     	
     <script>
-    function handleAppDetails(id) {
-	   history.back();
-       window.location.href = "/details/" + id;
-    }
-</script>
+	    function handleAppDetails(id) {
+		   history.back();
+	       window.location.href = "/details/" + id;
+	    }
+	</script>
+	
+	<script scr="https://cdnjs.cloudflare.com/ajax/link/chart.js/2.9.4/chart.js">
+	</script>
+
+
 </body>
 </html>

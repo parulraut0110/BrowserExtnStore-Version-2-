@@ -1,5 +1,6 @@
 package com.parul.BrowserExtnStore.Controller;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -51,8 +52,11 @@ public class SearchController {
 		System.out.println("Description : " + extensionResult.getDescription());
 		System.out.println("MimeType : " + thumbnailResult.getMimeType());
 		System.out.println("reviews : " + thumbnailResult.getReviews()[1]);
-		model.addAttribute("extensionResult", extensionResult);
-		model.addAttribute("thumbnailResult", thumbnailResult);
+		model.addAttribute("appDetailsInStore", extensionResult);
+		model.addAttribute("appDetailsInThumbnail", thumbnailResult);
+		model.addAttribute("thumbnailBase64", Base64.getEncoder().encodeToString(thumbnailResult.getThumbnail().getData()));
+		System.out.println("thumb : " + model.getAttribute("thumbnailBase64"));
+		System.out.println("description : " + ((ExtensionEntity)model.getAttribute("appDetailsInStore")).getDescription());
 		return "index";
 	}
 }
