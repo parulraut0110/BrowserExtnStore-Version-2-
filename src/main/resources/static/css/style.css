@@ -67,12 +67,12 @@ body {
 }
 
 #icon {
-	position: relative;
-	margin: 5px;
-	padding: 0;
-	top : 10px;
-	height: 100px;
-	width: auto;
+    position: relative;
+    top: 10px;
+    height: 100px;
+    width: auto;
+    display: block; /* Ensures it's treated as a block element */
+    margin: auto; /* Centers horizontally */
 }
 
 .sidebar .separator {

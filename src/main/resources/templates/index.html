@@ -50,7 +50,9 @@
 		</div>
 		
     	<div class="sidebar">	
-			<img src="/images/icon.png" id = "icon" />	
+			<div style="text-align: center;">
+			    <img src="/images/icon.png" id="icon" />
+			</div>
     		<div class="separator"> </div>
     		
     		<div class="category">
@@ -125,53 +127,101 @@
 			</div>
 			
 			<div th:if="${appDetailsInStore}">
-			    <div id="appDetails" style="width:80%; margin-top:100px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-			        <img style="height: 50px; width: 50px;" th:src="${'data:' + appDetailsInThumbnail.mimeType + ';base64,' + thumbnailBase64}" alt="Image" />
-
-			        <span th:text="${appDetailsInStore.extensionName}"></span>
-			
+			    <div id="appDetails" style="width:80%; margin-top:100px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: relative;" >
+					<img style="height: 50px; width: 50px; box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);" th:src="${'data:' + appDetailsInThumbnail.mimeType + ';base64,' + thumbnailBase64}" alt="Image" />
+					<h3 style="display: inline;">
+			        	<span th:text="${appDetailsInStore.extensionName}" style="padding-left: 10px; position: relative; top: calc(50%-12px);"></span>
+					</h3>
 			        <table>
 			            <tr>
-			                <td th:text="${appDetailsInStore.description}" style="margin: auto;"></td>
+			                <td th:text="${appDetailsInStore.description}" style="margin: auto; text-align: left;"></td>
 			            </tr>
-			            
-		            	<canvas id="myChart" style="width:100%; max-width: 400px;"></canvas>
-						
-						<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Make sure to include Chart.js library -->
-						<script>
-						    var yValues = ["5 star", "4 star", "3 star", "2 star", "1 star"];
-						    var xValues = [50, 40, 30, 20, 10];
-						    
-						    var totalRatings = xValues.reduce((a, b) => a + b, 0);
-						
-						    new Chart("myChart", {
-						        type: "bar",  // Horizontal bar has been deprecated
-						        data: {
-						            labels: yValues,
-						            datasets: [{
-						                backgroundColor: "Gold",  // Can be an array of colors too
-						                data: xValues
-						            }]
-						        },
-						        options: {
-						            indexAxis: 'y',  // This makes the bar chart horizontal
-						            legend: { display: false },
-						            title: {
-						                display: true,
-						                text: "Rating Breakdown"
-						            },
-						            scales: {
-						                x: {
-						                    min: 5,
-						                    max: 60
-						                }
-						            }
-						        }
-						    });
-						</script>
+			         </table>   
+			<div style="width: 40%; height: 300px;">  <!-- Set a fixed height here -->
+			    <canvas id="myChart"></canvas>
+			</div>
+			
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+			
+			<script>
+			  const ctx = document.getElementById('myChart');
+			  var yValues = ["5 star", "4 star", "3 star", "2 star", "1 star"];
+			  var xValues = [50, 40, 30, 20, 10];
+			  const totalRatings = xValues.reduce((a, b) => a+b, 0);
+			  var barColor = "limegreen";
+			
+			  const percentage = {
+			    id: 'percentPlugin',
+			    afterDatasetsDraw(chart) {
+			      const ctx = chart.ctx;
+			      chart.data.datasets.forEach((dataset, i) => {
+			        const meta = chart.getDatasetMeta(i);
+			        meta.data.forEach((bar, index) => {
+			          const dataValue = dataset.data[index];
+			          const percent = ((dataValue / totalRatings) * 100).toFixed(1);
+			          const percentage = "(" + percent + "%" +")";
+			
+			          ctx.fillStyle = '#000';
+			          ctx.font = '12px Arial';
+			          ctx.textAlign = 'right';
+			          ctx.textBaseline = 'middle';
+			
+			          const padding = 50;
+					  const xPosition = chart.chartArea.right + padding;
+			          const yPosition = bar.y;
+			          ctx.fillText(percentage, xPosition, yPosition);
+			        });
+			      });
+			    }
+			  };
+			
+			  Chart.register(percentage);
+			
+			  new Chart(ctx, {
+			    type: "bar",
+			    data: {
+			      labels: yValues,
+			      datasets: [{
+			        label: 'Ratings',
+			        backgroundColor: barColor,
+			        data: xValues
+			      }]
+			    },
+			    options: {
+			      maintainAspectRatio: true,  // Ensure the aspect ratio is maintained
+			      aspectRatio: 2,  // Set the aspect ratio
+			      indexAxis: 'y',
+			      layout: {
+                		padding: {
+                    		right: 60 // Add more padding to the right side
+                        }
+            	  },
+			      plugins: {
+			        legend: { display: false },
+			        title: {
+			          display: true,
+			          text: "Rating Breakdown",
+			          beginAtZero: true
+			        }
+			      },
+			      scales: {
+			        x: {
+			          ticks: {
+			            min: 0,
+			            max: 60,
+			            beginAtZero: true
+			          }
+			        },
+			        y: {
+			          beginAtZero: true
+			        }
+			      }
+			    }
+			  });
+			</script>
 
 												
-			        </table>
+			        
 			    </div>
 			</div>
 
@@ -300,9 +350,5 @@
 	    }
 	</script>
 	
-	<script scr="https://cdnjs.cloudflare.com/ajax/link/chart.js/2.9.4/chart.js">
-	</script>
-
-
 </body>
 </html>
