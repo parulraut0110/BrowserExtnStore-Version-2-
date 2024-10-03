@@ -119,37 +119,38 @@
 						<td>
     						<span th:text="${#numbers.formatDecimal(result.rating, 1, 1)} + ' (' + ${result.raters} + ')'"></span>
 						</td>
-
-
 			 		</tr>
 				</tbody>
 				</table>
 			</div>
 
 			<div th:if="${appDetailsInStore}">
-			    <div id="appDetails" style="width:80%; margin-top:100px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: relative;" >
-					<img style="height: 50px; width: 50px; box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);" th:src="${'data:' + appDetailsInThumbnail.mimeType + ';base64,' + thumbnailBase64}" alt="Image" />
-					<h3 style="display: inline;">
-			        	<span th:text="${appDetailsInStore.extensionName}" style="padding-left: 10px; position: relative; top: calc(50%-12px);"></span>
+			    <div id="appDetails" style="width:80%; height:5px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: relative;" >
+					<img style="height: 50px; width: 50px; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);" th:src="${'data:' + appDetailsInThumbnail.mimeType + ';base64,' + thumbnailBase64}" alt="Image" />
+					<h3 style="display: inline; position: absolute; top:50%;transform:translateY(-50%); padding-left: 10px;">
+			        	<span th:text="${appDetailsInStore.extensionName}"></span>
 					</h3>
 			        <table>
 			            <tr>
 			                <td th:text="${appDetailsInStore.description}" style="margin: auto; text-align: left;"></td>
 			            </tr>
 			         </table>   
-			<div style="width: 40%; height: 300px;">  <!-- Set a fixed height here -->
-			    <canvas id="myChart"></canvas>
+				<div style="width: 40%; height: 300px;">  <!-- Set a fixed height here -->
+				    <canvas id="myChart"></canvas>
+				</div>
+
+			     
+			    </div>
 			</div>
-			
 			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-			
+
 			<script>
 			  const ctx = document.getElementById('myChart');
 			  var yValues = ["5 star", "4 star", "3 star", "2 star", "1 star"];
 			  var xValues = [50, 40, 30, 20, 10];
 			  const totalRatings = xValues.reduce((a, b) => a+b, 0);
 			  var barColor = "limegreen";
-			
+
 			  const percentage = {
 			    id: 'percentPlugin',
 			    afterDatasetsDraw(chart) {
@@ -160,12 +161,12 @@
 			          const dataValue = dataset.data[index];
 			          const percent = ((dataValue / totalRatings) * 100).toFixed(1);
 			          const percentage = "(" + percent + "%" +")";
-			
+
 			          ctx.fillStyle = '#000';
 			          ctx.font = '12px Arial';
 			          ctx.textAlign = 'right';
 			          ctx.textBaseline = 'middle';
-			
+
 			          const padding = 50;
 					  const xPosition = chart.chartArea.right + padding;
 			          const yPosition = bar.y;
@@ -174,9 +175,9 @@
 			      });
 			    }
 			  };
-			
+
 			  Chart.register(percentage);
-			
+
 			  new Chart(ctx, {
 			    type: "bar",
 			    data: {
@@ -221,9 +222,7 @@
 			</script>
 
 
-			        
-			    </div>
-			</div>
+			   
 
 		</div>
   	</div>
@@ -351,4 +350,3 @@
 	</script>
 
 </body>
-</html>
