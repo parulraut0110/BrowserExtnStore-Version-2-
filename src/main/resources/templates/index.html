@@ -1,3 +1,260 @@
+<!DOCTYPE html> 
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Page</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"> 
+    <style>  
+	.login {
+	  display:none;	
+	  background-color:rgb(192,192,192);
+	  width:300px;
+	  height:100px;
+	  border:none;
+	  border-radius:15px;
+	  margin:10px;
+	  padding:20px;
+	  margin-left:auto;
+	  position:absolute;	
+	  top:34px;
+	  left:1025px;
+	  }
+	
+	#user {
+	  margin:0;
+	  padding:10px;
+	  }
+	#pwd {
+	  margin:0;
+	  padding:11px; 
+	}
+	#loginbtn {
+	  position: relative;
+	  left:200px;
+	  } 	
+   </style>
+   
+</head>
+
+<body>
+	<div class="container">
+    	<div class="topbar">
+			<form id="search-form" action="/search" method="GET" style="padding-left: 900px;">
+				<input type="text" id="search-query" name="search" placeholder="Search..." style="border: 3px solid thick"/>
+			</form>
+			<div class="buttons">
+				<button class="btn" id="user-login" onclick="handleUserLogin()">User Login</button>
+				<button class="btn" id="dev-login" onclick="handleDevLogin()">Developer Login</button>
+		        <button class="btn" id="regstr" onclick="handleRegstr()">Register</button>
+			</div>
+		</div>
+		
+    	<div class="sidebar">	
+			<div style="text-align: center;">
+			    <img src="/images/icon.png" id="icon" />
+			</div>
+    		<div class="separator"> </div>
+    		
+    		<div class="category">
+				
+				<div class="item" id="tools">
+					<img id="tools-icon" src="/images/tools.png"/>
+	    			<button id="tools-btn" onclick="showtools()">tools</button>	
+	    			<div class="rollon"></div>
+    			</div> 
+    			
+    			<div class="item" id="entertain" style="display: flex; justify-content: space-between; ">
+					<img id="entertain-icon" src="/images/entertain.png"/>
+	    			<button id="entertain-btn">entertainment</button>
+	    			<div class="rollon"></div>	
+    			</div>
+    			
+    			<div class="item" id="shopping">
+					<img id="shopping-icon" src="/images/shopping.png"/>
+	    			<button id="tools-btn" onclick="showtools()">shopping</button>	
+	    			<div class="rollon"></div>
+    			</div> 
+    			
+    			<div class="item" id="accessiblility" style="display: flex; justify-content: space-between; ">
+					<img id="accessiblility-icon" src="/images/accessability.png"/>
+	    			<button id="accessiblility-btn">accessiblility</button>
+	    			<div class="rollon"></div>	
+    			</div>
+    			
+    			<div class="item" id="art-design" style="display: flex; justify-content: space-between; ">
+					<img id="art-design-icon" src="/images/art-desing.png"/>
+	    			<button id="art-design-btn">art-design</button>
+	    			<div class="rollon"></div>	
+    			</div>
+    			
+    		</div>
+		</div>
+		
+    	<div class="main" >	
+			<div id="searchResults" th:if="${searchResults}">
+				 <div style="text-align: center;"><h4>Searched for : <span th:text="${searchData.search}"></span></h4></div>
+    			 <table class='search-table'>
+				<thead>
+					<tr>
+						<th>extension</th>
+						<th>description</th>
+						<th>link</th>
+						<th>rating</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each = "result : ${searchResults}">
+						<td>
+							<div>
+	            				<img class="thumbnail" th:src="'data:' + ${result.mimeType} + ';base64,' + ${result.thumbnailBase64}" alt="Image" th:onclick="'handleAppDetails(' + ${result.serialNo} + ')'"/>
+	        				</div>
+	       					<div style="margin:auto;">
+	        				    <span th:text="${result.extensionName}"></span>
+	       					</div>	
+       					</td>
+						<td th:text="${result.description}"></td>
+						<td>
+    						<a th:href="${result.browserLink}">Click here...</a>
+						</td>
+						<td>
+    						<span th:text="${#numbers.formatDecimal(result.rating, 1, 1)} + ' (' + ${result.raters} + ')'"></span>
+						</td>
+			 		</tr>
+				</tbody>
+				</table>
+			</div>
+			
+			<div th:if="${appDetailsInStore}">
+			    <div id="appDetails" style="width:80%; height:5px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: relative;" >
+					<img style="height: 50px; width: 50px; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);" th:src="${'data:' + appDetailsInThumbnail.mimeType + ';base64,' + thumbnailBase64}" alt="Image" />
+					<h3 style="display: inline; position: absolute; top:50%;transform:translateY(-50%); padding-left: 10px;">
+			        	<span th:text="${appDetailsInStore.extensionName}"></span>
+					</h3>
+			        <table>
+			            <tr>
+			                <td th:text="${appDetailsInStore.description}" style="margin: auto; text-align: left;"></td>
+			            </tr>
+			         </table>   
+				<div style="width: 40%; height: 300px;">  <!-- Set a fixed height here -->
+				    <canvas id="myChart"></canvas>
+				</div>
+			
+			     
+			    </div>
+			</div>
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+			
+			<script>
+			  const ctx = document.getElementById('myChart');
+			  var yValues = ["5 star", "4 star", "3 star", "2 star", "1 star"];
+			  var xValues = [50, 40, 30, 20, 10];
+			  const totalRatings = xValues.reduce((a, b) => a+b, 0);
+			  var barColor = "limegreen";
+			
+			  const percentage = {
+			    id: 'percentPlugin',
+			    afterDatasetsDraw(chart) {
+			      const ctx = chart.ctx;
+			      chart.data.datasets.forEach((dataset, i) => {
+			        const meta = chart.getDatasetMeta(i);
+			        meta.data.forEach((bar, index) => {
+			          const dataValue = dataset.data[index];
+			          const percent = ((dataValue / totalRatings) * 100).toFixed(1);
+			          const percentage = "(" + percent + "%" +")";
+			
+			          ctx.fillStyle = '#000';
+			          ctx.font = '12px Arial';
+			          ctx.textAlign = 'right';
+			          ctx.textBaseline = 'middle';
+			
+			          const padding = 50;
+					  const xPosition = chart.chartArea.right + padding;
+			          const yPosition = bar.y;
+			          ctx.fillText(percentage, xPosition, yPosition);
+			        });
+			      });
+			    }
+			  };
+			
+			  Chart.register(percentage);
+			
+			  new Chart(ctx, {
+			    type: "bar",
+			    data: {
+			      labels: yValues,
+			      datasets: [{
+			        label: 'Ratings',
+			        backgroundColor: barColor,
+			        data: xValues
+			      }]
+			    },
+			    options: {
+			      maintainAspectRatio: true,  // Ensure the aspect ratio is maintained
+			      aspectRatio: 2,  // Set the aspect ratio
+			      indexAxis: 'y',
+			      layout: {
+                		padding: {
+                    		right: 60 // Add more padding to the right side
+                        }
+            	  },
+			      plugins: {
+			        legend: { display: false },
+			        title: {
+			          display: true,
+			          text: "Rating Breakdown",
+			          beginAtZero: true
+			        }
+			      },
+			      scales: {
+			        x: {
+			          ticks: {
+			            min: 0,
+			            max: 60,
+			            beginAtZero: true
+			          }
+			        },
+			        y: {
+			          beginAtZero: true
+			        }
+			      }
+			    }
+			  });
+			</script>
+
+												
+			   
+
+		</div>
+  	</div>
+	
+	
+	<div class="login" id="login" >
+	    <div id = "user">
+	      <label for="user">Username:</label>
+	      <input type="text" name="user" />
+	    </div>
+	    <div id = "pwd">
+	      <label for="pwd">Password:</label>
+	      <input type="text" name="pwd"/>
+	    </div>
+	    <button type="submit" id = "loginbtn" onclick="handlePostUserLogin()">login</button>
+	</div>  
+	
+	
+	<script>
+		const tools_btn = document.getElementById("tools-btn");
+		tools_btn.addEventListener('click', function() {
+			document.getElementById("descr").innerHTML = "This is the project despriction. Download it for best user expirence";
+		});
+		
+		const entertain_btn = document.getElementById("entertain-btn");
+		entertain_btn.addEventListener('click', function() {
+			alert('entertain button clicked');
+		});			
+	</script>
+	
+	<script>
+		const buttons = document.getElementById("buttons").cloneNode(true);
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"> 
 <head>
@@ -257,6 +514,100 @@
 		const buttons = document.getElementById("buttons").cloneNode(true);
 		const topbar = document.querySelector(".topbar").innerHTML;
 		topbar.appendChild(buttons);
+	</script>
+	
+	<script>
+		function handleUserLogin() {
+			var lgn = document.getElementById("login");
+			lgn.style.display = "block";
+			console.log("user login clicked");
+		}
+		
+		function handlePostUserLogin() {
+			var lgn = document.getElementById("login");
+			lgn.style.display = "none"; 
+		}
+	</script>
+	
+	<script>
+		function showtools() {
+			console.log("tools cliked");
+			alert('tools cliked');
+		}
+		
+	</script>
+	
+	<script>
+		document.getElementById('search-query').addEventListener('keydown', function(e) {
+			if(e.key === 'Enter') {
+				e.preventDefault();
+				document.getElementById('search-form').submit(); 
+			}
+		});
+	</script>
+	
+	<script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const cells = document.querySelectorAll('.search-table td:nth-child(2)');
+
+        cells.forEach((cell) => {
+          const originalText = cell.textContent.trim();
+
+          if (originalText.length > 100) {
+            const truncatedText = originalText.substring(0, 100);
+            const remainingText = originalText.substring(100);
+
+
+            const readMoreLink = document.createElement('span');
+            readMoreLink.innerHTML =
+              '<a class="read-more-link">... read more</a>';
+            readMoreLink.style.textDecoration = 'none';
+
+           
+            const remainingSpan = document.createElement('span');
+            remainingSpan.textContent = remainingText;
+            remainingSpan.style.display = 'none'; // Initially hidden
+
+
+            const showLessLink = document.createElement('span');
+            showLessLink.innerHTML =
+              '<a class="show-less-link">... show less</a>';
+            showLessLink.style.textDecoration = 'none';
+            showLessLink.style.display = 'none'; // Initially hidden
+
+            cell.innerHTML = truncatedText;
+            cell.append(readMoreLink);
+            cell.append(remainingSpan);
+            cell.append(showLessLink);
+            
+            readMoreLink.addEventListener('click', function (e) {
+              e.preventDefault();
+              readMoreLink.style.display = 'none'; // Hide "read more"
+              remainingSpan.style.display = 'inline'; // Show remaining text
+              showLessLink.style.display = 'inline'; // Show "show less"
+            });
+
+
+            showLessLink.addEventListener('click', function (e) {
+              e.preventDefault();
+              remainingSpan.style.display = 'none'; // Hide remaining text
+              showLessLink.style.display = 'none'; // Hide "show less"
+              readMoreLink.style.display = 'inline'; // Show "read more"
+            });
+          }
+        });
+      });
+    </script>
+    	
+    <script>
+	    function handleAppDetails(id) {
+		   history.back();
+	       window.location.href = "/details/" + id;
+	    }
+	</script>
+	
+</body>
+</html>		topbar.appendChild(buttons);
 	</script>
 	
 	<script>
