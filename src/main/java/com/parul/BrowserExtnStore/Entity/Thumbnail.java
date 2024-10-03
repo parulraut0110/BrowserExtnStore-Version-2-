@@ -20,6 +20,7 @@ public class Thumbnail {
 	private int[] ratings;
 	private String mimeType;
 	
+	
 	public String getId() {
 		return id;
 	}	
@@ -61,5 +62,5 @@ public class Thumbnail {
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
 	}
-	
+
 }
