@@ -74,7 +74,6 @@
 	    			<button id="tools-btn" onclick="showtools()">shopping</button>	
 	    			<div class="rollon"></div>
     			</div> 
-
     			<div class="item" id="accessiblility" style="display: flex; justify-content: space-between; ">
 					<img id="accessiblility-icon" src="/images/accessability.png"/>
 	    			<button id="accessiblility-btn">accessiblility</button>
@@ -85,8 +84,7 @@
 					<img id="art-design-icon" src="/images/art-desing.png"/>
 	    			<button id="art-design-btn">art-design</button>
 	    			<div class="rollon"></div>	
-    			</div>
-
+				</div>
     		</div>
 		</div>
 
@@ -132,20 +130,24 @@
 					</h3>
 			        <table>
 			            <tr>
-			                <td th:text="${appDetailsInStore.description}" style="margin: auto; text-align: left;"></td>
+			                <td th:text="${appDetailsInStore.description}" style="margin: auto; text-align: left; padding: 10px;"></td>
 			            </tr>
 			         </table>   
-				<div style="width: 40%; height: 300px;">  <!-- Set a fixed height here -->
-				    <canvas id="myChart"></canvas>
-				</div>
-
+			    <div style="display: flex; margin: 20px;">    
+					<div style="width: 40%; height: 300px;">  <!-- Set a fixed height here -->
+					    <canvas id="ratings"></canvas>
+					</div>
+					<div style="width: 60%; height: 300px; margin-left: 20px;">  <!-- Set a fixed height here -->
+					    <canvas id="downloads"></canvas>
+					</div>
+				</div> 
 			     
 			    </div>
 			</div>
 			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 			<script>
-			  const ctx = document.getElementById('myChart');
+			  const ctx = document.getElementById('ratings');
 			  var yValues = ["5 star", "4 star", "3 star", "2 star", "1 star"];
 			  var xValues = [50, 40, 30, 20, 10];
 			  const totalRatings = xValues.reduce((a, b) => a+b, 0);
@@ -175,8 +177,6 @@
 			      });
 			    }
 			  };
-
-			  Chart.register(percentage);
 
 			  new Chart(ctx, {
 			    type: "bar",
@@ -217,10 +217,66 @@
 			          beginAtZero: true
 			        }
 			      }
-			    }
+			    },
+			    plugins: [percentage]
 			  });
 			</script>
 
+			<script>
+			    var ctx1 = document.getElementById("downloads");
+			    var dwnldChart = new Chart(ctx1, {
+			        type: "line",
+			        data: {
+			            // Combined labels for both monthly and weekly data
+			            labels: ["July", "August", "September", "", "", "Sat", "Sun", "Mon", "Tue", "Wed", "Thur", "Fri"],
+			            datasets: [{
+			                label: "Downloads in last 3 months",
+			                // Monthly data corresponding to the months
+			                data: [30, 40, 100, null, null, null, null, null, null, null, null],
+			                borderColor: 'rgba(75, 192, 192, 1)',
+			                fill: false,
+			                yAxisID: 'y1',  // Reference the first Y-axis
+			            },
+			            {
+			                label: "Downloads in last 7 days",
+			                // Weekly data corresponding to the days of the week
+			                data: [null, null, null, null, null, 6, 4, 5, 4, 3, 3, 5],
+			                borderColor: 'rgba(153, 102, 255, 1)',
+			                fill: false,
+			                yAxisID: 'y2',  // Reference the second Y-axis (different scale)
+			            }]
+			        },
+			        options: {
+			            legend: {
+			                display: true
+			            },
+			            scales: {
+			                x: {
+			                    beginAtZero: false
+			                },
+			                y1: {
+			                    type: 'linear',
+			                    position: 'left',   // Left side Y-axis for monthly downloads
+			                    title: {
+			                        display: true,
+			                        text: 'Monthly Downloads'
+			                    }
+			                },
+			                y2: {
+			                    type: 'linear',
+			                    position: 'right',  // Right side Y-axis for weekly downloads
+			                    title: {
+			                        display: true,
+			                        text: 'Weekly Downloads'
+			                    },
+			                    grid: {
+			                        drawOnChartArea: false  // Disable grid lines on right side Y-axis
+			                    }
+			                }
+			            }
+			        }
+			    });
+			</script>
 
 			   
 

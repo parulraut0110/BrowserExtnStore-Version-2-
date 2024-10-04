@@ -19,6 +19,8 @@ public class Thumbnail {
 	private int raters;
 	private int[] ratings;
 	private String mimeType;
+	private int[] monthlyDownloads;
+	private int[] weeklyDownloads;
 	
 	
 	public String getId() {
@@ -61,6 +63,18 @@ public class Thumbnail {
 
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
+	}
+	public int[] getMonthlyDownloads() {
+		return monthlyDownloads;
+	}
+	public void setMonthlyDownloads(int[] monthlyDownloads) {
+		this.monthlyDownloads = monthlyDownloads;
+	}
+	public int[] getWeeklyDownloads() {
+		return weeklyDownloads;
+	}
+	public void setWeeklyDownloads(int[] weeklyDownloads) {
+		this.weeklyDownloads = weeklyDownloads;
 	}
 
 }

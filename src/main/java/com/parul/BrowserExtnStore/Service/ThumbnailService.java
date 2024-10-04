@@ -35,6 +35,7 @@ public class ThumbnailService {
 		Binary thumbnailData = new Binary(Files.readAllBytes(Paths.get("C:\\Users\\parul\\Downloads\\Dark_Mode_Logo.png")));
 		thumbnail.setThumbnail(thumbnailData);
 		thumbnail.setMimeType("image/png");
+		//thumbnail.setMonthlyDownloads(new int[] {30, 40, 100, 50});
 		thumbRepo.save(thumbnail);
 		System.out.println("Entered Successfully");
 	}
@@ -56,6 +57,7 @@ public class ThumbnailService {
 			System.out.println("rating : " + dto.getRating());
 			System.out.println("review1 : " + thumbnail.getReviews()[1]);
 			System.out.println("raters : " + thumbnail.getRaters());
+			System.out.println("2nd month Downloads : " + thumbnail.getMonthlyDownloads()[1]);
 			System.out.println("mimeType : " + thumbnail.getMimeType());
 			
 		}
