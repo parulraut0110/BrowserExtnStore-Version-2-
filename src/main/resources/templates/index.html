@@ -404,5 +404,90 @@
 	       window.location.href = "/details/" + id;
 	    }
 	</script>
+	
+	
 
 </body>
+
+
+
+<a href=# onclick='clickHandler()'>click here ...</a>
+  <canvas id="downloadChart" style="width:100%;max-width:600px"></canvas>
+  
+  <script>
+    var monthlyDownloads = [{July:120}, {August:150}, {September:100}]; 
+    var currentWeekDownloads = [10, 12, 9, 14, 20, 16, 19];  
+  </script>
+  
+  <script>
+    
+    function clickHandler() {
+      let currentMonthName = new Date().toLocaleString('default', { month: 'long' });
+      let dayOfMonth = new Date().getDate();
+      //alert(currentMonthName + ' ' + dayOfMonth);
+      dayOfMonth = 1;
+      if(dayOfMonth === 1 && Object.keys(monthlyDownloads[monthlyDownloads.length - 1])[0] !== currentMonthName) {
+        if (monthlyDownloads.length === 4) 
+           monthlyDownloads.shift(); 
+    
+        monthlyDownloads.push({[currentMonthName]:1});
+      }
+      alert(Object.keys(monthlyDownloads[3])[0] + '  ' + Object.values(monthlyDownloads[3])[0]);
+    }
+  </script>
+
+  
+  <script>
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+    
+    //let currentMonthName = new Date().toLocaleString('default', { month: 'long' });
+    //alert(currentMonthName);
+ 
+    let monthLabels = [];
+    let dayLabels = [];
+    let last3MnthsDwnlds = [];
+    
+    let currentMonthIndex = new Date().getMonth();
+    let currentWeekdayIndex = new Date().getDay();
+    /*
+    for(let i = (currentMonthIndex-3+12)%12; i !== currentMonthIndex; i=(i+1)%12)
+       monthLabels.push(months[i]);
+    */
+    for(var i = (currentWeekdayIndex+1)%7; i !== currentWeekdayIndex; i=(i+1)%7)
+      dayLabels.push(days[i]);
+    dayLabels.push(days[i]);
+     
+    for(let i = 0; i < 3; i++)
+      monthLabels.push(Object.keys(monthlyDownloads[i])[0]);
+    
+    for(let i = 0; i < 3; i++)
+      last3MnthsDwnlds.push(Object.values(monthlyDownloads[i])[0]);
+    
+    var ctx = document.getElementById('downloadChart').getContext('2d');
+    var downloadChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: monthLabels.concat(dayLabels), 
+        datasets: [{
+          label: 'Monthly Downloads',
+          data: last3MnthsDwnlds.concat(currentWeekDownloads),  
+          borderColor: 'blue',
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          xAxes: [{
+            display: true
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  </script>

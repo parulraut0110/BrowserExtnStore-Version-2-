@@ -1,5 +1,7 @@
 package com.parul.BrowserExtnStore.Entity;
 
+import java.util.Map.Entry;
+
 import org.bson.types.Binary;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -19,8 +21,10 @@ public class Thumbnail {
 	private int raters;
 	private int[] ratings;
 	private String mimeType;
-	private int[] monthlyDownloads;
-	private int[] weeklyDownloads;
+	private Entry<String, Integer> monthlyDownloads;
+	private Entry<String, Integer> weeklyDownloads;
+	private int totalDownloads;
+	
 	
 	
 	public String getId() {
@@ -64,17 +68,23 @@ public class Thumbnail {
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
 	}
-	public int[] getMonthlyDownloads() {
+	public Entry<String, Integer> getMonthlyDownloads() {
 		return monthlyDownloads;
 	}
-	public void setMonthlyDownloads(int[] monthlyDownloads) {
+	public void setMonthlyDownloads(Entry<String, Integer> monthlyDownloads) {
 		this.monthlyDownloads = monthlyDownloads;
 	}
-	public int[] getWeeklyDownloads() {
+	public Entry<String, Integer> getWeeklyDownloads() {
 		return weeklyDownloads;
 	}
-	public void setWeeklyDownloads(int[] weeklyDownloads) {
+	public void setWeeklyDownloads(Entry<String, Integer> weeklyDownloads) {
 		this.weeklyDownloads = weeklyDownloads;
+	}
+	public int getTotalDownloads() {
+		return totalDownloads;
+	}
+	public void setTotalDownloads(int totalDownloads) {
+		this.totalDownloads = totalDownloads;
 	}
 
 }
