@@ -22,7 +22,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "extensions")
+@Table(name = "SearchResultDTO")
 @SqlResultSetMapping(
     name = "SearchResultDTOMapping",
     classes = @ConstructorResult(

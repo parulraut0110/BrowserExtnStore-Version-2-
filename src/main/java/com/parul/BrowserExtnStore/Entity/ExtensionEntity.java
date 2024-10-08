@@ -45,10 +45,8 @@ public class ExtensionEntity {
 	    @Column(name = "description", columnDefinition = "TEXT")
 	    private String description;
 
-		public ExtensionEntity(int serialNo, String extensionName, int devId, Date dateUploaded, Date lastModified,
+		public ExtensionEntity(String extensionName, int devId, Date dateUploaded, Date lastModified,
 				String versionNo, String browserLink, byte[] extension, String description) {
-			super();
-			this.serialNo = serialNo;
 			this.extensionName = extensionName;
 			this.devId = devId;
 			this.dateUploaded = dateUploaded;

@@ -21,11 +21,9 @@ public class Thumbnail {
 	private int raters;
 	private int[] ratings;
 	private String mimeType;
-	private Entry<String, Integer> monthlyDownloads;
-	private Entry<String, Integer> weeklyDownloads;
-	private int totalDownloads;
-	
-	
+	private Entry<String, Integer>[] monthlyDownloads;
+	private Entry<String, Integer>[] weeklyDownloads;
+	private int totalDownloads;	
 	
 	public String getId() {
 		return id;
@@ -68,23 +66,29 @@ public class Thumbnail {
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
 	}
-	public Entry<String, Integer> getMonthlyDownloads() {
-		return monthlyDownloads;
-	}
-	public void setMonthlyDownloads(Entry<String, Integer> monthlyDownloads) {
-		this.monthlyDownloads = monthlyDownloads;
-	}
-	public Entry<String, Integer> getWeeklyDownloads() {
-		return weeklyDownloads;
-	}
-	public void setWeeklyDownloads(Entry<String, Integer> weeklyDownloads) {
-		this.weeklyDownloads = weeklyDownloads;
-	}
+	
 	public int getTotalDownloads() {
 		return totalDownloads;
 	}
+	
 	public void setTotalDownloads(int totalDownloads) {
 		this.totalDownloads = totalDownloads;
+	}
+	
+	public Entry<String, Integer>[] getMonthlyDownloads() {
+		return monthlyDownloads;
+	}
+	
+	public void setMonthlyDownloads(Entry<String, Integer>[] monthlyDownloads) {
+		this.monthlyDownloads = monthlyDownloads;
+	}
+	
+	public Entry<String, Integer>[] getWeeklyDownloads() {
+		return weeklyDownloads;
+	}
+	
+	public void setWeeklyDownloads(Entry<String, Integer>[] weeklyDownloads) {
+		this.weeklyDownloads = weeklyDownloads;
 	}
 
 }

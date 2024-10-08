@@ -27,10 +27,11 @@ public class ThumbnailService {
 	MongoTemplate mongoTemplate;
 
 	
-	public void saveThumbnail() throws IOException {
+	public void saveThumbnail(int serialNo) throws IOException {
 		Thumbnail thumbnail = new Thumbnail();
-		thumbnail.setSerialNo(1);
+		thumbnail.setSerialNo(serialNo);
 		thumbnail.setRatings(new int[] {10, 20, 30, 40, 50});
+		thumbnail.setTotalDownloads(0);
 		thumbnail.setRaters(0);
 		Binary thumbnailData = new Binary(Files.readAllBytes(Paths.get("C:\\Users\\parul\\Downloads\\Dark_Mode_Logo.png")));
 		thumbnail.setThumbnail(thumbnailData);
@@ -57,7 +58,7 @@ public class ThumbnailService {
 			System.out.println("rating : " + dto.getRating());
 			System.out.println("review1 : " + thumbnail.getReviews()[1]);
 			System.out.println("raters : " + thumbnail.getRaters());
-			System.out.println("2nd month Downloads : " + thumbnail.getMonthlyDownloads()[1]);
+			System.out.println("2nd month Downloads : " + (thumbnail.getMonthlyDownloads())[1]);
 			System.out.println("mimeType : " + thumbnail.getMimeType());
 			
 		}
