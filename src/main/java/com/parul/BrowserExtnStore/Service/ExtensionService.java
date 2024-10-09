@@ -38,19 +38,12 @@ public class ExtensionService {
             ps.setDate(3, extension.getDateUploaded());
             ps.setDate(4, extension.getLastModified());
             ps.setString(5, extension.getVersionNo());
-            ps.setString(5, extension.getBrowserLink());
-            ps.setBytes(6, extension.getExtension());
-            ps.setString(7, extension.getDescription());
+            ps.setString(6, extension.getBrowserLink());
+            ps.setBytes(7, extension.getExtension());
+            ps.setString(8, extension.getDescription());
             return ps;
         }, keyHolder);
         		
-        try {
-            extensionRepo.save(extension);
-            System.out.println("Added successfully");
-        } catch (Exception e) {
-            System.out.println("Error saving extension: " + e.getMessage());
-            e.printStackTrace();
-        }
 		return keyHolder.getKey().intValue();
     }
       

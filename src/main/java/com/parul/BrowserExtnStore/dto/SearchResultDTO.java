@@ -2,6 +2,7 @@ package com.parul.BrowserExtnStore.dto;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.bson.types.Binary;
 import jakarta.persistence.SqlResultSetMapping;
@@ -21,30 +22,6 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "SearchResultDTO")
-@SqlResultSetMapping(
-    name = "SearchResultDTOMapping",
-    classes = @ConstructorResult(
-        targetClass = SearchResultDTO.class,
-        columns = {
-            @ColumnResult(name = "serialNo", type = Integer.class),
-            @ColumnResult(name = "extensionName", type = String.class),
-            @ColumnResult(name = "description", type = String.class),
-            @ColumnResult(name = "browserLink", type = String.class),
-            @ColumnResult(name = "versionNo", type = String.class),
-            @ColumnResult(name = "extension", type = byte[].class)
-        }
-    )
-)
-@NamedNativeQuery(
-    name = "ExtensionEntity.findSearchResults",
-    query = "SELECT serialNo, extensionName, description, browserLink, versionNo, extension " + 
-            "FROM extensions " +
-            "WHERE MATCH(extensionName, description) " +
-            "AGAINST (?1 WITH QUERY EXPANSION)",
-    resultSetMapping = "SearchResultDTOMapping"
-)
 @Data
 public class SearchResultDTO {
 	//Fields for mysql
@@ -67,8 +44,10 @@ public class SearchResultDTO {
 	private int raters;
 	private float rating;
 	private String mimeType;
-	
-	
+	private Map<String, Integer> monthlyDownloads;
+	private Map<String, Integer> weeklyDownloads;
+	private int totalDownloads;	
+		
 	public SearchResultDTO(int serialNo, String extensionName, String description, String browserLink, String versionNo,
 			byte[] extension) {
 		super();
@@ -78,8 +57,8 @@ public class SearchResultDTO {
 		this.browserLink = browserLink;
 		this.versionNo = versionNo;
 		this.extension = extension;
+		
 	}
-	
 	
 	public int getSerialNo() {
 		return serialNo;
@@ -147,5 +126,26 @@ public class SearchResultDTO {
 	public void setMimeType(String mimeType) {
 		mimeType = mimeType;
 	}
+	public int getTotalDownloads() {
+		return totalDownloads;
+	}
+	
+	public void setTotalDownloads(int totalDownloads) {
+		this.totalDownloads = totalDownloads;
+	}
+	public Map<String, Integer> getMonthlyDownloads() {
+		return monthlyDownloads;
+	}
+	public void setMonthlyDownloads(Map<String, Integer> monthlyDownloads) {
+		this.monthlyDownloads = monthlyDownloads;
+	}
+	public Map<String, Integer> getWeeklyDownloads() {
+		return weeklyDownloads;
+	}
+	public void setWeeklyDownloads(Map<String, Integer> weeklyDownloads) {
+		this.weeklyDownloads = weeklyDownloads;
+	}
+	
+
 	
 }

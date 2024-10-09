@@ -1,16 +1,38 @@
 package com.parul.BrowserExtnStore.Entity;
 
-
 import java.io.InputStream;
 import java.sql.Date;
+
+import com.parul.BrowserExtnStore.dto.SearchResultDTO;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Entity            
+@Entity
 @Table(name = "Extensions")
+@SqlResultSetMapping(
+    name = "SearchResultDTOMapping",
+    classes = @ConstructorResult(
+        targetClass = SearchResultDTO.class,
+        columns = {
+            @ColumnResult(name = "serialNo", type = Integer.class),
+            @ColumnResult(name = "extensionName", type = String.class),
+            @ColumnResult(name = "description", type = String.class),
+            @ColumnResult(name = "browserLink", type = String.class),
+            @ColumnResult(name = "versionNo", type = String.class),
+            @ColumnResult(name = "extension", type = byte[].class)
+        }
+    )
+)
+@NamedNativeQuery(
+    name = "ExtensionEntity.findSearchResults",
+    query = "SELECT serialNo, extensionName, description, browserLink, versionNo, extension " + 
+            "FROM extensions " +
+            "WHERE MATCH(extensionName, description) " +
+            "AGAINST (?1 WITH QUERY EXPANSION)",
+    resultSetMapping = "SearchResultDTOMapping"
+)         
 @NoArgsConstructor
 public class ExtensionEntity {
 	
