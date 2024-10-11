@@ -227,12 +227,14 @@
 			    var dwnldChart = new Chart(ctx1, {
 			        type: "line",
 			        data: {
-			            // Combined labels for both monthly and weekly data
+			            //Combined labels for both monthly and weekly data
 			            labels: ["July", "August", "September", "", "", "Sat", "Sun", "Mon", "Tue", "Wed", "Thur", "Fri"],
+			            //labels: [],
 			            datasets: [{
 			                label: "Downloads in last 3 months",
 			                // Monthly data corresponding to the months
 			                data: [30, 40, 100, null, null, null, null, null, null, null, null],
+			                //data: [],
 			                borderColor: 'rgba(75, 192, 192, 1)',
 			                fill: false,
 			                yAxisID: 'y1',  // Reference the first Y-axis
@@ -241,6 +243,7 @@
 			                label: "Downloads in last 7 days",
 			                // Weekly data corresponding to the days of the week
 			                data: [null, null, null, null, null, 6, 4, 5, 4, 3, 3, 5],
+			 
 			                borderColor: 'rgba(153, 102, 255, 1)',
 			                fill: false,
 			                yAxisID: 'y2',  // Reference the second Y-axis (different scale)
@@ -406,6 +409,23 @@
 	</script>
 	
 	
+	<script th:inline="javascript">
+    function updateMonthlyDownloads() {
+        var monthlyDownloadsJson = JSON.parse(/*[[${monthlyDownloadsJson}]]*/ '{}');
+        var months = Object.keys(monthlyDownloadsJson);
+        var monthlyDownloads = Object.values(monthlyDownloadsJson);
+        
+        // Update chart labels and data
+        dwnldChart.data.labels = months;  // Update labels directly on the chart
+        dwnldChart.data.datasets[0].data = monthlyDownloads;  // Update data for the first dataset
+        
+        // Update the chart to reflect changes
+        dwnldChart.update();
+
+        console.log("Monthly Downloads: " + Object.values(monthlyDownloads)[0]);
+    }
+</script>
+
 
 
 </body>

@@ -19,6 +19,8 @@ import com.parul.BrowserExtnStore.Repository.ExtensionRepo;
 import com.parul.BrowserExtnStore.Repository.ThumbnailRepository;
 import com.parul.BrowserExtnStore.Service.ThumbnailService;
 import com.parul.BrowserExtnStore.dto.SearchResultDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class SearchController {
@@ -38,25 +40,33 @@ public class SearchController {
 		System.out.println("Results: " + searchResults.get(0).getExtensionName() + " " + searchResults.get(0).getDescription());
 		System.out.println("serialNo : " + searchResults.get(0).getSerialNo());
 		searchResults = service.findInThumnailRepo(searchResults);
-		
 		System.out.println("thumbnail size : " + searchResults.get(0).getThumbnailBase64().length());
 		model.addAttribute("searchResults", searchResults);
 		return "index";
 	}
 	
 	@GetMapping("/details/{id}")
-	public String appDetails(@PathVariable int id, Model model) {
+	public String appDetails(@PathVariable int id, Model model) throws JsonProcessingException {
 		ExtensionEntity extensionResult = extensionRepo.findAppDetailsInExtension(id);
 		Thumbnail thumbnailResult = thumbnailRepo.findAppDetailsInThumbnail(id);
 		System.out.println("BrowserLink : " + extensionResult.getBrowserLink());
 		System.out.println("Description : " + extensionResult.getDescription());
 		System.out.println("MimeType : " + thumbnailResult.getMimeType());
 		System.out.println("reviews : " + thumbnailResult.getReviews()[1]);
+		System.out.println("monthly Downloads : " + thumbnailResult.getMonthlyDownloads().get("October"));
 		model.addAttribute("appDetailsInStore", extensionResult);
 		model.addAttribute("appDetailsInThumbnail", thumbnailResult);
 		model.addAttribute("thumbnailBase64", Base64.getEncoder().encodeToString(thumbnailResult.getThumbnail().getData()));
+		ObjectMapper objectMapper = new ObjectMapper();
+		String monthlyDownloadsJson = "{}";  // Default to an empty JSON object if null
+		if (thumbnailResult.getMonthlyDownloads() != null) {
+		    monthlyDownloadsJson = objectMapper.writeValueAsString(thumbnailResult.getMonthlyDownloads());
+		}
+
+		model.addAttribute("monthlyDownloadsJson", monthlyDownloadsJson);
 		System.out.println("thumb : " + model.getAttribute("thumbnailBase64"));
 		System.out.println("description : " + ((ExtensionEntity)model.getAttribute("appDetailsInStore")).getDescription());
+		System.out.println("october Download : " + ((Thumbnail)model.getAttribute("appDetailsInThumbnail")).getMonthlyDownloads().get("October"));
 		return "index";
 	}
 }
