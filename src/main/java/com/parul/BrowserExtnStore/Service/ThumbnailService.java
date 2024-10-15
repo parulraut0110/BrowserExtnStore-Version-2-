@@ -67,6 +67,8 @@ public class ThumbnailService {
 			query.addCriteria(Criteria.where("serialNo").is(dto.getSerialNo()));
 			Thumbnail thumbnail = mongoTemplate.findOne(query, Thumbnail.class);
 			System.out.println("size of reviews : " + thumbnail.getReviews().length);
+			System.out.println("WeeklyDownloads of sunday, friday, and thursday : " + thumbnail.getWeeklyDownloads().get("Sun") + " " + thumbnail.getWeeklyDownloads().get("Thur") + " " + thumbnail.getWeeklyDownloads().get("Fri"));
+			System.out.println("total downloads : " + thumbnail.getTotalDownloads());
 			dto.setReviews(thumbnail.getReviews());
 			dto.setThumbnailBase64(Base64.getEncoder().encodeToString(thumbnail.getThumbnail().getData()));
 			dto.setRaters(thumbnail.getRaters());

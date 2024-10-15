@@ -408,10 +408,15 @@
 	    }
 	</script>
 	
-	
+			 	
 	<script th:inline="javascript">
     function updateMonthlyDownloads() {
+		console.log("entered");
         var monthlyDownloadsJson = JSON.parse(/*[[${monthlyDownloadsJson}]]*/ '{}');
+        console.log("after parse");
+        var juneDownloads = Object.values(monthlyDownloadsJson);
+        console.log("Monthly Downloads: " + juneDownloads);
+
         var months = Object.keys(monthlyDownloadsJson);
         var monthlyDownloads = Object.values(monthlyDownloadsJson);
         
@@ -426,6 +431,10 @@
     }
 </script>
 
-
+<div id="ChartDisplay" th:if="${monthlyDownloadsJson}">
+		<div style="text-align: center;"><h4>Weekly Downloads : <span th:text="${monthlyDownloadsJson}"></span></h4></div>
+		console.log("entered div");
+		console.log(${monthlyDownloadsJson});
+</div>
 
 </body>

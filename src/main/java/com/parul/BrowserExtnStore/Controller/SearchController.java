@@ -53,17 +53,22 @@ public class SearchController {
 		System.out.println("Description : " + extensionResult.getDescription());
 		System.out.println("MimeType : " + thumbnailResult.getMimeType());
 		System.out.println("reviews : " + thumbnailResult.getReviews()[1]);
-		System.out.println("monthly Downloads : " + thumbnailResult.getMonthlyDownloads().get("October"));
+		System.out.println("monthly Downloads : " + thumbnailResult.getMonthlyDownloads().get("September"));
+		
 		model.addAttribute("appDetailsInStore", extensionResult);
 		model.addAttribute("appDetailsInThumbnail", thumbnailResult);
 		model.addAttribute("thumbnailBase64", Base64.getEncoder().encodeToString(thumbnailResult.getThumbnail().getData()));
+		
 		ObjectMapper objectMapper = new ObjectMapper();
-		String monthlyDownloadsJson = "{}";  // Default to an empty JSON object if null
-		if (thumbnailResult.getMonthlyDownloads() != null) {
-		    monthlyDownloadsJson = objectMapper.writeValueAsString(thumbnailResult.getMonthlyDownloads());
-		}
-
+		String monthlyDownloadsJson = "{}";  
+		monthlyDownloadsJson = objectMapper.writeValueAsString(thumbnailResult.getMonthlyDownloads());
+		System.out.println(monthlyDownloadsJson);
 		model.addAttribute("monthlyDownloadsJson", monthlyDownloadsJson);
+		
+		String weeklyDownloadsJson = "{}"; 
+		weeklyDownloadsJson = objectMapper.writeValueAsString(thumbnailResult.getWeeklyDownloads());
+		model.addAttribute("weeklyDownloadsJson", weeklyDownloadsJson);
+		
 		System.out.println("thumb : " + model.getAttribute("thumbnailBase64"));
 		System.out.println("description : " + ((ExtensionEntity)model.getAttribute("appDetailsInStore")).getDescription());
 		System.out.println("october Download : " + ((Thumbnail)model.getAttribute("appDetailsInThumbnail")).getMonthlyDownloads().get("October"));
