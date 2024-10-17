@@ -1,6 +1,7 @@
 package com.parul.BrowserExtnStore.Service;
 
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.parul.BrowserExtnStore.Entity.Thumbnail;
@@ -47,15 +49,15 @@ public class ThumbnailService {
 
 		thumbnail.setSerialNo(serialNo);
 		thumbnail.setRatings(new int[] {10, 20, 30, 40, 50});
-		thumbnail.setTotalDownloads(0);
-		thumbnail.setRaters(0);
+		thumbnail.setTotalDownloads(200);
+		thumbnail.setRaters(150);
 		Binary thumbnailData = new Binary(Files.readAllBytes(Paths.get("C:\\Users\\parul\\Downloads\\Dark_Mode_Logo.png")));
 		thumbnail.setThumbnail(thumbnailData);
 		thumbnail.setMimeType("image/png");
 		
-		LocalDate currentDate = LocalDate.now();  // Get the current date
+		LocalDate currentDate = LocalDate.now();
 	    int currentMonthIndex = currentDate.getMonthValue() - 1;
-	    
+	    thumbnail.setLastDownloadedOn(currentDate);
 		thumbnail.setMonthlyDownloads(new HashMap<String, Integer>(Map.of(months[currentMonthIndex], 0)));
 		thumbRepo.save(thumbnail);
 		System.out.println("Entered Successfully");
@@ -87,5 +89,21 @@ public class ThumbnailService {
 		}
 		return dtos;
 	}
+	
+	public void updateDownloadStats(int serialNo, 
+            Map<String, Integer> monthlyDownloads, 
+            Map<String, Integer> weeklyDownloads, 
+            Date lastDownloadedOn) {
+			
+			Query query = new Query(Criteria.where("serialNo").is(serialNo));
+			
+			Update update = new Update()
+			.inc("totalDownloads", 1)
+			.set("monthlyDownloads", monthlyDownloads)
+			.set("weeklyDownloads", weeklyDownloads)
+			.set("lastDownloadedOn", lastDownloadedOn);
+			
+			mongoTemplate.updateFirst(query, update, Thumbnail.class);
+			}
 
 }

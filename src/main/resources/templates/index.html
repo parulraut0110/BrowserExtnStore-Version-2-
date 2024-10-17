@@ -223,33 +223,78 @@
 			</script>
 
 			<script th:inline="javascript">
-				let name1 = /*[[${monthlyDownloadsJson}]]*/ '{}';
-				console.log(name1);
-				let name2 = /*[[${weeklyDownloadsJson}]]*/ '{}';
-				console.log(name2);
-				let total = /*[[${appDetailsInThumbnail.totalDownloads}]]*/ '{}';	
-				console.log(total);
+				let monthlyDownloads = /*[[${monthlyDownloadsJson}]]*/ '{}';
+				console.log(monthlyDownloads);
+				let weeklyDownloads = /*[[${weeklyDownloadsJson}]]*/ '{}';
+				console.log(weeklyDownloads);
+				let thumbnailAppDetails = /*[[${appDetailsInThumbnail}]]*/ '()';
+				console.log(thumbnailAppDetails.totalDownloads);
+				
+				var monthlyDownloadsJson = JSON.parse(monthlyDownloads);
+				var weeklyDownloadsJson = JSON.parse(weeklyDownloads);
+				
+				var days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+				
+				
+				let today = new Date();
+				today.setHours(0,0,0,0);
+				
+				let lastDownloadedOn = new Date('2024-10-02');
+      			lastDownloadedOn.setHours(0,0,0,0);
+				alert("lastDownloadedOn : " + lastDownloadedOn);
+				
+				let currentMonthName = today.toLocaleString('default', { month: 'long' });
+	      		var todaysWeekIndex = today.getDay();
+	      		alert("monthlyDownloads : " + JSON.stringify(monthlyDownloadsJson));
+				
+				var monthlyDownloadEntries = Object.entries(monthlyDownloadsJson);
+		      	console.log("Monthly Downloads Entries: " + Object.entries(monthlyDownloadsJson)[0]);
+			    if(monthlyDownloadEntries[monthlyDownloadEntries.length-1][0] !== currentMonthName) {
+			      if(monthlyDownloadEntries.length === 4) 
+			         monthlyDownloadEntries.shift(); 
+			       
+			      monthlyDownloadEntries.push([[currentMonthName], 1]);
+			      monthlyDownloadsJson = Object.fromEntries(monthlyDownloadEntries)
+			     }
+			     else 
+	        		monthlyDownloadsJson[currentMonthName] += 1;
+	      
+	      		 alert('updatedMonthlyDownloads : ' + JSON.stringify(monthlyDownloadsJson));
+	      		 let dateDifferenceInMilliseconds = today - lastDownloadedOn;
+	      		 alert("dateDifference : " + lastDownloadedOn);
+	      		 let daysElapsed = dateDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+	     
+			     alert('gap in days : ' + daysElapsed);
+			     let daysOffset = daysElapsed % 7;
+			     alert('offset in days : ' + daysOffset);
+			      
+			     lastDownloadedOn = today;
+	      		 lastDownloadedOn.setHours(0,0,0,0);
+	      		 alert('lastDownloadedOn : ' + lastDownloadedOn);
+			     thumbnailAppDetails.totalDownloads += 1;
+			     alert('!! ' + Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson)));
+			    
+			     
+			      
 			    var ctx1 = document.getElementById("downloads");
 			    var dwnldChart = new Chart(ctx1, {
 			        type: "line",
 			        data: {
-			            //Combined labels for both monthly and weekly data
-			            labels: ["July", "August", "September", "", "", "Sat", "Sun", "Mon", "Tue", "Wed", "Thur", "Fri"],
-			            //labels: [],
+			            //labels: ["July", "August", "September", "", "", "Sat", "Sun", "Mon", "Tue", "Wed", "Thur", "Fri"],
+			            labels: Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson)),
 			            datasets: [{
 			                label: "Downloads in last 3 months",
 			                // Monthly data corresponding to the months
-			                data: [30, 40, 100, null, null, null, null, null, null, null, null],
-			                //data: [],
+			                //data: [30, 40, 100, null, null, null, null, null, null, null, null],
+			                data: Object.values(monthlyDownloadsJson).concat([null]).concat(new Array(7).fill(null)),
 			                borderColor: 'rgba(75, 192, 192, 1)',
 			                fill: false,
 			                yAxisID: 'y1',  // Reference the first Y-axis
 			            },
 			            {
 			                label: "Downloads in last 7 days",
-			                // Weekly data corresponding to the days of the week
-			                data: [null, null, null, null, null, 6, 4, 5, 4, 3, 3, 5],
-			 
+			                //data: [null, null, null, null, null, 6, 4, 5, 4, 3, 3, 5],
+			 				data: new Array(Object.values(monthlyDownloadsJson).length).fill(null).concat([null]).concat(Object.values(weeklyDownloadsJson)),
 			                borderColor: 'rgba(153, 102, 255, 1)',
 			                fill: false,
 			                yAxisID: 'y2',  // Reference the second Y-axis (different scale)
@@ -261,7 +306,11 @@
 			            },
 			            scales: {
 			                x: {
-			                    beginAtZero: false
+			                    beginAtZero: false,
+			                    title: {
+			                      display:true,
+			                      text: 'Downloaded ' + thumbnailAppDetails.totalDownloads + ' times'
+			                    }
 			                },
 			                y1: {
 			                    type: 'linear',

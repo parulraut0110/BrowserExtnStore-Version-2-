@@ -1,5 +1,6 @@
 package com.parul.BrowserExtnStore.Entity;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 import org.bson.types.Binary;
@@ -24,7 +25,10 @@ public class Thumbnail {
 	private Map<String, Integer> monthlyDownloads;
 	private Map<String, Integer> weeklyDownloads;
 	private int totalDownloads;	
+	private LocalDate lastDownloadedOn;
 	
+	
+
 	public String getId() {
 		return id;
 	}	
@@ -96,5 +100,13 @@ public class Thumbnail {
 	public void setWeeklyDownloads(Map<String, Integer> weeklyDownloads) {
 		this.weeklyDownloads = weeklyDownloads;
 	}
+	
+	public LocalDate getLastDownloadedOn() {
+		return lastDownloadedOn;
+	}
 
+	public void setLastDownloadedOn(LocalDate lastDownloadedOn) {
+		this.lastDownloadedOn = lastDownloadedOn;
+	}
+	
 }
