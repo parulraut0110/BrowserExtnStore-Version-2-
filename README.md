@@ -125,7 +125,10 @@ Check out [this repository](https://github.com/parulraut0110/BrowserExtensionSto
 }
 ```
 
+```bash
+CREATE FULLTEXT INDEX fulltext_idx ON extensions (extensionName, description);
 
+```
 
 
 
