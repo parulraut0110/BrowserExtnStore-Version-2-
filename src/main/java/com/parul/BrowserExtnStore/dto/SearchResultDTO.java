@@ -47,7 +47,7 @@ public class SearchResultDTO {
 	private Map<String, Integer> monthlyDownloads;
 	private Map<String, Integer> weeklyDownloads;
 	private int totalDownloads;	
-	private java.sql.Date lastDownloadedOn;
+	//private java.sql.Date lastDownloadedOn;
 
 		
 	public SearchResultDTO(int serialNo, String extensionName, String description, String browserLink, String versionNo,
@@ -147,6 +147,7 @@ public class SearchResultDTO {
 	public void setWeeklyDownloads(Map<String, Integer> weeklyDownloads) {
 		this.weeklyDownloads = weeklyDownloads;
 	}
+	/*
 	public java.sql.Date getLastDownloadedOn() {
 		return lastDownloadedOn;
 	}
@@ -154,6 +155,6 @@ public class SearchResultDTO {
 	public void setLastDownloadedOn(java.sql.Date lastDownloadedOn) {
 		this.lastDownloadedOn = lastDownloadedOn;
 	}
-
+*/
 	
 }

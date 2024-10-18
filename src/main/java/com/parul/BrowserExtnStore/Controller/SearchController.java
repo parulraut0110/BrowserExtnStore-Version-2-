@@ -70,6 +70,7 @@ public class SearchController {
 		model.addAttribute("weeklyDownloadsJson", weeklyDownloadsJson);
 		
 		System.out.println("thumb : " + model.getAttribute("thumbnailBase64"));
+		//System.out.println("lastDownloadedOn : " + thumbnailResult.getLastDownloadedOn());
 		System.out.println("description : " + ((ExtensionEntity)model.getAttribute("appDetailsInStore")).getDescription());
 		System.out.println("october Download : " + ((Thumbnail)model.getAttribute("appDetailsInThumbnail")).getMonthlyDownloads().get("October"));
 		return "index";

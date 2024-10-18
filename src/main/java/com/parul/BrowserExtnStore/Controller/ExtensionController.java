@@ -57,6 +57,7 @@ public class ExtensionController {
         
         //call thumbnail service method to save data in mongoDb
         thumbnailService.saveThumbnail(serNo);
+        
     }
     
     

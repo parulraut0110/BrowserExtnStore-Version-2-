@@ -2,10 +2,15 @@ package com.parul.BrowserExtnStore.Service;
 
 import java.io.IOException;
 
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
@@ -57,7 +62,12 @@ public class ThumbnailService {
 		
 		LocalDate currentDate = LocalDate.now();
 	    int currentMonthIndex = currentDate.getMonthValue() - 1;
-	    thumbnail.setLastDownloadedOn(currentDate);
+	    /*
+	    ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT, ZoneOffset.UTC);
+	    java.util.Date utilDate = java.util.Date.from(zonedDateTime.toInstant());
+	    java.sql.Date lastDownloadedOn = new java.sql.Date(utilDate.getTime());
+	    thumbnail.setLastDownloadedOn(lastDownloadedOn);
+	    */
 		thumbnail.setMonthlyDownloads(new HashMap<String, Integer>(Map.of(months[currentMonthIndex], 0)));
 		thumbRepo.save(thumbnail);
 		System.out.println("Entered Successfully");
@@ -90,11 +100,7 @@ public class ThumbnailService {
 		return dtos;
 	}
 	
-	public void updateDownloadStats(int serialNo, 
-            Map<String, Integer> monthlyDownloads, 
-            Map<String, Integer> weeklyDownloads, 
-            Date lastDownloadedOn) {
-			
+	public void updateDownloadStats(int serialNo, Map<String, Integer> monthlyDownloads, Map<String, Integer> weeklyDownloads, Date lastDownloadedOn) {
 			Query query = new Query(Criteria.where("serialNo").is(serialNo));
 			
 			Update update = new Update()
@@ -104,6 +110,6 @@ public class ThumbnailService {
 			.set("lastDownloadedOn", lastDownloadedOn);
 			
 			mongoTemplate.updateFirst(query, update, Thumbnail.class);
-			}
+	}
 
 }

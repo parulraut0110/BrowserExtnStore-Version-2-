@@ -1,5 +1,6 @@
 package com.parul.BrowserExtnStore.Entity;
 
+import java.util.Date;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 
+import lombok.NoArgsConstructor;
 
 @Document(collection = "ExtensionStore")
 public class Thumbnail {
@@ -25,8 +27,26 @@ public class Thumbnail {
 	private Map<String, Integer> monthlyDownloads;
 	private Map<String, Integer> weeklyDownloads;
 	private int totalDownloads;	
-	private LocalDate lastDownloadedOn;
+	private java.sql.Date lastDownloadedOn;
 	
+	/*
+	public Thumbnail(String id, int serialNo, String[] reviews, Binary thumbnail, int raters, int[] ratings,
+			String mimeType, Map<String, Integer> monthlyDownloads, Map<String, Integer> weeklyDownloads,
+			int totalDownloads, Date lastDownloadedOn) {
+		super();
+		this.id = id;
+		this.serialNo = serialNo;
+		this.reviews = reviews;
+		this.thumbnail = thumbnail;
+		this.raters = raters;
+		this.ratings = ratings;
+		this.mimeType = mimeType;
+		this.monthlyDownloads = monthlyDownloads;
+		this.weeklyDownloads = weeklyDownloads;
+		this.totalDownloads = totalDownloads;
+		this.lastDownloadedOn = lastDownloadedOn;
+	}
+	*/
 	
 
 	public String getId() {
@@ -100,13 +120,13 @@ public class Thumbnail {
 	public void setWeeklyDownloads(Map<String, Integer> weeklyDownloads) {
 		this.weeklyDownloads = weeklyDownloads;
 	}
-	
-	public LocalDate getLastDownloadedOn() {
+	public java.sql.Date getLastDownloadedOn() {
 		return lastDownloadedOn;
 	}
 
-	public void setLastDownloadedOn(LocalDate lastDownloadedOn) {
+	public void setLastDownloadedOn(java.sql.Date lastDownloadedOn) {
 		this.lastDownloadedOn = lastDownloadedOn;
 	}
+	
 	
 }
