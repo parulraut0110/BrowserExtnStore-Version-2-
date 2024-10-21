@@ -27,7 +27,9 @@ public class Thumbnail {
 	private Map<String, Integer> monthlyDownloads;
 	private Map<String, Integer> weeklyDownloads;
 	private int totalDownloads;	
-	private java.sql.Date lastDownloadedOn;
+	private java.util.Date lastDownloadedOn;
+	private String country;
+	private java.util.Date remarkedOn; 
 	
 	/*
 	public Thumbnail(String id, int serialNo, String[] reviews, Binary thumbnail, int raters, int[] ratings,
@@ -120,12 +122,29 @@ public class Thumbnail {
 	public void setWeeklyDownloads(Map<String, Integer> weeklyDownloads) {
 		this.weeklyDownloads = weeklyDownloads;
 	}
-	public java.sql.Date getLastDownloadedOn() {
+
+	public java.util.Date getLastDownloadedOn() {
 		return lastDownloadedOn;
 	}
 
-	public void setLastDownloadedOn(java.sql.Date lastDownloadedOn) {
+	public void setLastDownloadedOn(java.util.Date lastDownloadedOn) {
 		this.lastDownloadedOn = lastDownloadedOn;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public java.util.Date getRemarkedOn() {
+		return remarkedOn;
+	}
+
+	public void setRemarkedOn(java.util.Date remarkedOn) {
+		this.remarkedOn = remarkedOn;
 	}
 	
 	

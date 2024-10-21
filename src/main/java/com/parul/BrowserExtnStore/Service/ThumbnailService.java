@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,7 +40,7 @@ public class ThumbnailService {
 	MongoTemplate mongoTemplate;
 
 	
-	public void saveThumbnail(int serialNo) throws IOException {
+	public void saveThumbnail(int serialNo) throws IOException, ParseException {
 		Thumbnail thumbnail = new Thumbnail(); 
         String[] months = {
         	    "January", "February", "March", "April", "May", 
@@ -59,16 +60,23 @@ public class ThumbnailService {
 		Binary thumbnailData = new Binary(Files.readAllBytes(Paths.get("C:\\Users\\parul\\Downloads\\Dark_Mode_Logo.png")));
 		thumbnail.setThumbnail(thumbnailData);
 		thumbnail.setMimeType("image/png");
+		thumbnail.setCountry("Germany");
+	    
+		java.util.Date remarkedOn; // = new SimpleDateFormat().parse("0000-00-00");    // set to default value
 		
 		LocalDate currentDate = LocalDate.now();
 	    int currentMonthIndex = currentDate.getMonthValue() - 1;
-	    /*
+	    
 	    ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT, ZoneOffset.UTC);
-	    java.util.Date utilDate = java.util.Date.from(zonedDateTime.toInstant());
-	    java.sql.Date lastDownloadedOn = new java.sql.Date(utilDate.getTime());
+	    java.util.Date lastDownloadedOn = java.util.Date.from(zonedDateTime.toInstant());
 	    thumbnail.setLastDownloadedOn(lastDownloadedOn);
-	    */
+	    System.out.println("Country " + thumbnail.getCountry());
+	    System.out.println("Last Downloaded On " + lastDownloadedOn.toString());
 		thumbnail.setMonthlyDownloads(new HashMap<String, Integer>(Map.of(months[currentMonthIndex], 0)));
+		zonedDateTime = ZonedDateTime.of(2024, 05, 17, 0, 0, 0, 0, ZoneOffset.UTC);
+		remarkedOn = java.util.Date.from(zonedDateTime.toInstant());
+		thumbnail.setRemarkedOn(remarkedOn);
+		System.out.println(thumbnail.getRemarkedOn());
 		thumbRepo.save(thumbnail);
 		System.out.println("Entered Successfully");
 	}

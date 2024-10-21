@@ -239,7 +239,8 @@
 				let today = new Date();
 				today.setHours(0,0,0,0);
 				
-				let lastDownloadedOn = thumbnailAppDetails.lastDownloadedOn;
+				let lastDownloadedOn = new Date(thumbnailAppDetails.lastDownloadedOn);
+				lastDownloadedOn.setHours(0,0,0,0);
 				alert("lastDownloadedOn : " + lastDownloadedOn);
 				
 				let currentMonthName = today.toLocaleString('default', { month: 'long' });
@@ -260,7 +261,9 @@
 	      
 	      		 alert('updatedMonthlyDownloads : ' + JSON.stringify(monthlyDownloadsJson));
 	      		 let dateDifferenceInMilliseconds = today - lastDownloadedOn;
-	      		 alert("dateDifference : " + lastDownloadedOn);
+				 alert("dateDifference type: " + typeof lastDownloadedOn);
+				 alert("today type: " + typeof today);
+
 	      		 let daysElapsed = dateDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
 	     
 			     alert('gap in days : ' + daysElapsed);
@@ -269,7 +272,7 @@
 			      
 			     lastDownloadedOn = today;
 	      		 alert('lastDownloadedOn : ' + lastDownloadedOn);
-			     thumbnailAppDetails.totalDownloads += 1;
+			     //thumbnailAppDetails.totalDownloads += 1;
 			     alert('!! ' + Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson)));
 			    
 			     
