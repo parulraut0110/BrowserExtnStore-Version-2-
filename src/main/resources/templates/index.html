@@ -112,7 +112,7 @@
        					</td>
 						<td th:text="${result.description}"></td>
 						<td>
-    						<a th:href="${result.browserLink}" onclick = 'updateMonthlyDownloads()'>Click here...</a>
+							<a th:href="@{''}" onclick="updateDownloadStats()">Click here...</a>
 						</td>
 						<td>
     						<span th:text="${#numbers.formatDecimal(result.rating, 1, 1)} + ' (' + ${result.raters} + ')'"></span>
@@ -124,7 +124,7 @@
 
 			<div th:if="${appDetailsInStore}">
 			    <div id="appDetails" style="width:80%; height:5px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; position: relative;" >
-					<img style="height: 50px; width: 50px; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);" th:src="${'data:' + appDetailsInThumbnail.mimeType + ';base64,' + thumbnailBase64}" alt="Image" />
+					<img style="height: 50px; width: 50px; border-radius: 5px; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);" th:src="${'data:' + appDetailsInThumbnail.mimeType + ';base64,' + thumbnailBase64}" alt="Image" />
 					<h3 style="display: inline; position: absolute; top:50%;transform:translateY(-50%); padding-left: 10px;">
 			        	<span th:text="${appDetailsInStore.extensionName}"></span>
 					</h3>
@@ -139,6 +139,8 @@
 					</div>
 					<div style="width: 60%; height: 300px; margin-left: 20px;">  <!-- Set a fixed height here -->
 					    <canvas id="downloads"></canvas>
+					    <div><a th:href="@{''}" onclick="updateDownloadStats()">Click here...</a></div>
+
 					</div>
 				</div> 
 			     
@@ -222,15 +224,20 @@
 			  });
 			</script>
 
+			<script>
+				var monthlyDownloadsJson;
+			</script>
+			
 			<script th:inline="javascript">
-				let monthlyDownloads = /*[[${monthlyDownloadsJson}]]*/ '{}';
+				var monthlyDownloads = /*[[${monthlyDownloadsJson}]]*/ '{}';
 				console.log(monthlyDownloads);
-				let weeklyDownloads = /*[[${weeklyDownloadsJson}]]*/ '{}';
+				var weeklyDownloads = /*[[${weeklyDownloadsJson}]]*/ '{}';
 				console.log(weeklyDownloads);
-				let thumbnailAppDetails = /*[[${appDetailsInThumbnail}]]*/ '()';
+				var thumbnailAppDetails = /*[[${appDetailsInThumbnail}]]*/ '()';
 				console.log(thumbnailAppDetails.totalDownloads);
+				alert("**" + JSON.stringify(monthlyDownloadsJson));
 				
-				var monthlyDownloadsJson = JSON.parse(monthlyDownloads);
+				monthlyDownloadsJson = JSON.parse(monthlyDownloads);
 				var weeklyDownloadsJson = JSON.parse(weeklyDownloads);
 				
 				var days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
@@ -336,8 +343,7 @@
 			        }
 			    });
 			</script>
-
-			   
+			
 
 		</div>
   	</div>
@@ -464,26 +470,15 @@
 	    }
 	</script>
 	
+	
+	
 			 	
 	<script th:inline="javascript">
-	    function updateMonthlyDownloads() {
+	    function updateDownloadStats() {
 			console.log("entered");
-	        var monthlyDownloadsJson = JSON.parse(/*[[${monthlyDownloadsJson}]]*/ '{}');
-	        console.log("after parse");
-	        var juneDownloads = Object.values(monthlyDownloadsJson);
-	        console.log("Monthly Downloads: " + juneDownloads);
-	
-	        var months = Object.keys(monthlyDownloadsJson);
-	        var monthlyDownloads = Object.values(monthlyDownloadsJson);
-	        
-	        // Update chart labels and data
-	        dwnldChart.data.labels = months;  // Update labels directly on the chart
-	        dwnldChart.data.datasets[0].data = monthlyDownloads;  // Update data for the first dataset
-	        
-	        // Update the chart to reflect changes
-	        dwnldChart.update();
-	
-	        console.log("Monthly Downloads: " + Object.values(monthlyDownloads)[0]);
+			alert("entered");
+			alert("monthlyDownloads : " + JSON.stringify(monthlyDownloadsJson));
+			//alter("let part : " + monthlyDownloads);
 	    }
 	</script>
 
