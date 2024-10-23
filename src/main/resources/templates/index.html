@@ -224,9 +224,7 @@
 			  });
 			</script>
 
-			<script>
-				var monthlyDownloadsJson;
-			</script>
+			
 			
 			<script th:inline="javascript">
 				var monthlyDownloads = /*[[${monthlyDownloadsJson}]]*/ '{}';
@@ -234,11 +232,12 @@
 				var weeklyDownloads = /*[[${weeklyDownloadsJson}]]*/ '{}';
 				console.log(weeklyDownloads);
 				var thumbnailAppDetails = /*[[${appDetailsInThumbnail}]]*/ '()';
-				console.log(thumbnailAppDetails.totalDownloads);
-				alert("**" + JSON.stringify(monthlyDownloadsJson));
+				var totalDownloads = thumbnailAppDetails.totalDownloads;
 				
 				monthlyDownloadsJson = JSON.parse(monthlyDownloads);
-				var weeklyDownloadsJson = JSON.parse(weeklyDownloads);
+				weeklyDownloadsJson = JSON.parse(weeklyDownloads);
+				
+				alert("**" + JSON.stringify(monthlyDownloadsJson));
 				
 				var days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 				
@@ -260,16 +259,14 @@
 			      if(monthlyDownloadEntries.length === 4) 
 			         monthlyDownloadEntries.shift(); 
 			       
-			      monthlyDownloadEntries.push([[currentMonthName], 1]);
+				  monthlyDownloadEntries.push([currentMonthName, 1]);
 			      monthlyDownloadsJson = Object.fromEntries(monthlyDownloadEntries)
 			     }
 			     else 
-	        		monthlyDownloadsJson[currentMonthName] += 1;
+	        		//monthlyDownloadsJson[currentMonthName] += 1;
 	      
 	      		 alert('updatedMonthlyDownloads : ' + JSON.stringify(monthlyDownloadsJson));
 	      		 let dateDifferenceInMilliseconds = today - lastDownloadedOn;
-				 alert("dateDifference type: " + typeof lastDownloadedOn);
-				 alert("today type: " + typeof today);
 
 	      		 let daysElapsed = dateDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
 	     
@@ -281,8 +278,36 @@
 	      		 alert('lastDownloadedOn : ' + lastDownloadedOn);
 			     //thumbnailAppDetails.totalDownloads += 1;
 			     alert('!! ' + Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson)));
-			    
+			      
+			     alert("###"); 
 			     
+			     weeklyDownloadEntries = Object.entries(weeklyDownloadsJson);
+		         if(daysElapsed < 7) {
+			        for(let i = 1; i <= daysElapsed; i++) {   // #
+			           weeklyDownloadEntries.push(weeklyDownloadEntries.shift());
+			           weeklyDownloadEntries[6][1] = 0;
+			        }
+		          	weeklyDownloadEntries[6][1] += 1;
+		          	weeklyDownloadsJson = Object.fromEntries(weeklyDownloadEntries);
+	                alert("***" + JSON.stringify(weeklyDownloadsJson));	         
+		         }
+		         
+			     else {
+					 alert("weekly entries : " + weeklyDownloadEntries);
+		            weeklyDownloadsJson = {};
+		            alert("Days Offset * : " + daysOffset);
+		            
+		            for(var j = daysOffset; j != (daysOffset - 1 + 7) % 7; j = (j + 1) % 7) 
+		            	weeklyDownloadsJson[weeklyDownloadEntries[j][0]] = 0;   
+		       		
+		            weeklyDownloadsJson[weeklyDownloadEntries[j][0]] = 0;
+		            
+		        }
+		        
+		        alert("weeklyDownloads : " + JSON.stringify(weeklyDownloadsJson));
+			    
+			    
+			    
 			      
 			    var ctx1 = document.getElementById("downloads");
 			    var dwnldChart = new Chart(ctx1, {
@@ -317,7 +342,7 @@
 			                    beginAtZero: false,
 			                    title: {
 			                      display:true,
-			                      text: 'Downloaded ' + thumbnailAppDetails.totalDownloads + ' times'
+			                      text: 'Downloaded ' + totalDownloads + ' times'
 			                    }
 			                },
 			                y1: {
@@ -475,11 +500,43 @@
 			 	
 	<script th:inline="javascript">
 	    function updateDownloadStats() {
-			console.log("entered");
 			alert("entered");
+		    monthlyDownloadsJson[currentMonthName] += 1;
 			alert("monthlyDownloads : " + JSON.stringify(monthlyDownloadsJson));
-			//alter("let part : " + monthlyDownloads);
-	    }
+						
+			lastDownloadedOn = today;
+	        lastDownloadedOn.setHours(0,0,0,0);
+	      
+	        totalDownloads += 1;
+	        alert("totalDownloads : " + totalDownloads);
+	    
+	        dwnldChart.data.labels = Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson));
+	        dwnldChart.data.datasets[0].data = Object.values(monthlyDownloadsJson).concat([null]).concat(new Array(7).fill(null));
+	        dwnldChart.data.datasets[1].data = new Array(Object.entries(monthlyDownloadsJson).length).fill(null).concat([null]).concat(Object.values(weeklyDownloadsJson));
+	        dwnldChart.options.scales.x.title.text = 'Downloaded ' + totalDownloads + ' times';
+	        dwnldChart.update();
+	        
+	        
+	        const data = {
+	           monthlyDownloadsJson: monthlyDownloadsJson,
+	           weeklyDownloadsJson: weeklyDownloadsJson,
+	           totalDownloads: totalDownloads,
+	           lastDownloadedOn: lastDownloadedOn
+	        };
+		  	fetch('/update-download-stats', {
+		       method:'POST',
+		   	   headers: {
+		       'Content-Type': 'application/json',
+		       },
+		       body: JSON.stringify(data)
+		  	})
+		  	.then(response => response.json())
+		  	.then(alert('data fetched successfully!!'))
+		  	.catch(err => {
+		    	alert('Error :' + err)
+		  	});
+		  
+	}
 	</script>
 
 </body>
