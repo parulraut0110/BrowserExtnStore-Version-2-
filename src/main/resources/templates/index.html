@@ -33,6 +33,145 @@
 	  left:200px;
 	  } 	
    </style>
+   
+   <style>
+	   
+	   .outer {
+		  padding: 15px;
+		  background: inherit;
+		}
+		
+		.inner {
+		    display: grid;
+		    grid-template-columns: repeat(15, 1fr); 
+		    grid-auto-rows: 20px;
+		    grid-gap: 10px;
+		    background: inherit;
+		}
+		
+		.review-box {
+			border-radius:5px; 
+			box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+		}
+		
+		hr {
+		  width: 85%; 
+		  border: none; 
+		  border-top: 1px solid rgb(160, 160, 160);
+		  margin:0 auto;
+		  position:relative;
+		  top:25%;
+		}
+		
+		.quote-image {
+		  height: 7px;
+		  width: 7px;
+		}
+		
+		.quote-image.opening {
+		  left:5%;
+		  top: 17%; 
+		  position: absolute; 
+		  margin-left:2px;
+		  padding:0 2px;
+		  background-color:inherit;
+		  transform:rotate(180deg);
+		}
+		
+		.quote-image.closing {
+		  right:15%;
+		  top:93%;
+		  position: absolute;
+		  padding:0 2px;
+		  background-color:inherit;
+		}
+		
+		.user-dugout {
+		  top:10%;
+		  left:15%;
+		  display:block;
+		  position:relative;
+		  padding:0;
+		  margin:0;
+		}
+		
+		.img-box {
+		  display:block;
+		  position: relative;
+		  margin:0;
+		  left: 20px;
+		  top: 15px;
+		  
+		}
+		
+		.img-box img {
+		  width:60px;
+		  height:60px;
+		  border-radius: 5px;
+		  mix-blend-mode: multiply;
+		}
+		
+		h6 {
+		  font-family: Garamond, serif; 
+		  margin:0;
+		  padding:0;
+		}
+		
+		.feedback-stars {
+		  display: flex;
+		  gap: 1px;
+		  margin-top:7px;
+		  padding: 3px;
+		}
+		
+		.feedback-stars div {
+		  background-image: url('https://assets.onecompiler.app/42rxsn3ht/42thfqst7/star-images-9439.png');
+		  background-repeat: no-repeat;
+		  background-size: contain;
+		  width: 12px;
+		  height: 12px;
+		  mix-blend-mode: multiply;
+		}
+		
+		#loc {
+		  font-family:"Courier New", Courier, monospace;
+		  font-size: 8px;
+		  padding: 0;
+		  margin: 7px 0;
+		}
+		
+		.reviewBox {
+		  width:75%;
+		  height:25%;
+		  border-left: 1px solid red;
+		  border-bottom: 1px solid red;
+		  border-top:none;
+		  border-right:none;
+		  border-bottom-left-radius:10px;
+		  margin-left:10px;
+		  top:14%;
+		  position:relative;
+		  background-color: inherit;
+		}
+		
+		#user-remark {
+		  font-family: 'Helvetica';
+		  font-size:6px;
+		  font-style: italic;
+		  padding-left: 10px;
+		  position:absolute;
+		  top:21%;
+		}
+		
+		#review-age {
+		  font-family:'Verdana';
+		  font-size:5px;
+		  font-style:italic;
+		  position:absolute;
+		  left:60%;
+		  bottom:1%;
+		}
+   </style>
 
 </head>
 
@@ -112,7 +251,7 @@
        					</td>
 						<td th:text="${result.description}"></td>
 						<td>
-							<a th:href="@{''}" onclick="updateDownloadStats()">Click here...</a>
+							<a th:href="@{''}" onclick="updateDownloadStats(event)">Click here...</a>
 						</td>
 						<td>
     						<span th:text="${#numbers.formatDecimal(result.rating, 1, 1)} + ' (' + ${result.raters} + ')'"></span>
@@ -139,10 +278,118 @@
 					</div>
 					<div style="width: 60%; height: 300px; margin-left: 20px;">  <!-- Set a fixed height here -->
 					    <canvas id="downloads"></canvas>
-					    <div><a th:href="@{''}" onclick="updateDownloadStats()">Click here...</a></div>
+					    <div><a th:href="@{''}" onclick="updateDownloadStats(event)">Click here...</a></div>
 
 					</div>
-				</div> 
+				</div>
+				
+				
+					<div class="outer" style="position:relative;"> 
+					  <p style="text-align:center; padding: 0; margin: 0;">Users say ...</p>
+					
+					  <div class="inner" style="position:relative;"> 
+					  
+					    <div class="review-box" style="grid-column:1/4; grid-row:1/11;position:relative; background-color:rgb(210, 210, 210);">
+					      <div class='user-dugout'>
+					          <div class="img-box">
+					              <img src="/images/Linda.png"/>
+					              <h6>LINDA RAUT</h6>
+					          </div>
+					          <div class='feedback-stars' id = 'stars1'></div>
+					          <p id ='loc'></p>
+					      </div>
+					      
+					      <div class ='reviewBox'>
+					          <hr/> 
+					          <p id='user-remark'></p>
+					          <img class ="quote-image opening" src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/>
+					          <img class ='quote-image closing' src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/> 
+					      </div>
+					      <p id = 'review-age'></p>
+					    </div> 
+					       
+					    <div class="review-box" style="grid-column:4/7; grid-row:1/11;position: relative;background-color:rgb(171,247, 178);">
+					      <div class='user-dugout'>
+					          <div class="img-box">
+					              <img src="/images/Mona.png"/>
+					              <h6>MONA LISA</h6>
+					          </div>
+					          <div class='feedback-stars' id = 'stars1'></div>
+					          <p id ='loc'></p>
+					      </div>
+					      
+					      <div class ='reviewBox'>
+					          <hr/> 
+					          <p id='user-remark'></p>
+					          <img class ="quote-image opening" src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/>
+					          <img class ='quote-image closing' src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/> 
+					      </div>
+					      <p id = 'review-age'></p>
+					    </div> 
+					   
+					    <div class="review-box" style="grid-column:7/10; grid-row:1/11; position:relative;background-color:rgb(255,216, 240);">
+					      <div class='user-dugout'>
+					          <div class="img-box">
+					              <img src="/images/Parul.png"/>
+					              <h6>PARUL RAUT</h6>
+					          </div>
+					          <div class='feedback-stars' id = 'stars1'></div>
+					          <p id ='loc'></p>
+					      </div>
+					      
+					      <div class ='reviewBox'>
+					          <hr/> 
+					          <p id='user-remark'></p>
+					          <img class ="quote-image opening" src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/>
+					          <img class ='quote-image closing' src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/> 
+					      </div>
+					      <p id = 'review-age'></p>
+					    </div>
+					    
+					    <div class="review-box" style="grid-column:10/13; grid-row:1/11;position:relative; background-color:rgb(210, 210, 210);">
+					      <div class='user-dugout'>
+					          <div class="img-box">
+					              <img src="/images/Linda.png"/>
+					              <h6>LINDA RAUT</h6>
+					          </div>
+					          <div class='feedback-stars' id = 'stars1'></div>
+					          <p id ='loc'></p>
+					      </div>
+					      
+					      <div class ='reviewBox'>
+					          <hr/> 
+					          <p id='user-remark'></p>
+					          <img class ="quote-image opening" src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/>
+					          <img class ='quote-image closing' src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/> 
+					      </div>
+					      <p id = 'review-age'></p>
+					    </div> 
+					    
+					    
+					    <div class="review-box" style="grid-column:13/16; grid-row:1/11;position:relative; background-color:rgb(210, 210, 210);">
+					      <div class='user-dugout'>
+					          <div class="img-box">
+					              <img src="/images/Linda.png"/>
+					              <h6>LINDA RAUT</h6>
+					          </div>
+					          <div class='feedback-stars' id = 'stars1'></div>
+					          <p id ='loc'></p>
+					      </div>
+					      
+					      <div class ='reviewBox'>
+					          <hr/> 
+					          <p id='user-remark'></p>
+					          <img class ="quote-image opening" src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/>
+					          <img class ='quote-image closing' src ="https://assets.onecompiler.app/42rxsn3ht/42v4wwv8t/favpng_logo-testimonial-customer-industrial-design.png"/> 
+					      </div>
+					      <p id = 'review-age'></p>
+					    </div> 
+					    
+					    
+					  </div>  
+					</div> 
+					
+				 
 			     
 			    </div>
 			</div>
@@ -233,104 +480,34 @@
 				console.log(weeklyDownloads);
 				var thumbnailAppDetails = /*[[${appDetailsInThumbnail}]]*/ '()';
 				var totalDownloads = thumbnailAppDetails.totalDownloads;
+				var lastDownloadedOn = thumbnailAppDetails.lastDownloadedOn; 
 				
 				monthlyDownloadsJson = JSON.parse(monthlyDownloads);
-				weeklyDownloadsJson = JSON.parse(weeklyDownloads);
+				weeklyDownloadsJson = JSON.parse(weeklyDownloads);				
 				
-				alert("**" + JSON.stringify(monthlyDownloadsJson));
-				
-				var days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-				
-				
-				let today = new Date();
-				today.setHours(0,0,0,0);
-				
-				let lastDownloadedOn = new Date(thumbnailAppDetails.lastDownloadedOn);
-				lastDownloadedOn.setHours(0,0,0,0);
-				alert("lastDownloadedOn : " + lastDownloadedOn);
-				
-				let currentMonthName = today.toLocaleString('default', { month: 'long' });
-	      		var todaysWeekIndex = today.getDay();
-	      		alert("monthlyDownloads : " + JSON.stringify(monthlyDownloadsJson));
-				
-				var monthlyDownloadEntries = Object.entries(monthlyDownloadsJson);
-		      	console.log("Monthly Downloads Entries: " + Object.entries(monthlyDownloadsJson)[0]);
-			    if(monthlyDownloadEntries[monthlyDownloadEntries.length-1][0] !== currentMonthName) {
-			      if(monthlyDownloadEntries.length === 4) 
-			         monthlyDownloadEntries.shift(); 
-			       
-				  monthlyDownloadEntries.push([currentMonthName, 1]);
-			      monthlyDownloadsJson = Object.fromEntries(monthlyDownloadEntries)
-			     }
-			     else 
-	        		//monthlyDownloadsJson[currentMonthName] += 1;
-	      
-	      		 alert('updatedMonthlyDownloads : ' + JSON.stringify(monthlyDownloadsJson));
-	      		 let dateDifferenceInMilliseconds = today - lastDownloadedOn;
-
-	      		 let daysElapsed = dateDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
-	     
-			     alert('gap in days : ' + daysElapsed);
-			     let daysOffset = daysElapsed % 7;
-			     alert('offset in days : ' + daysOffset);
-			      
-			     lastDownloadedOn = today;
-	      		 alert('lastDownloadedOn : ' + lastDownloadedOn);
-			     //thumbnailAppDetails.totalDownloads += 1;
-			     alert('!! ' + Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson)));
-			      
-			     alert("###"); 
-			     
-			     weeklyDownloadEntries = Object.entries(weeklyDownloadsJson);
-		         if(daysElapsed < 7) {
-			        for(let i = 1; i <= daysElapsed; i++) {   // #
-			           weeklyDownloadEntries.push(weeklyDownloadEntries.shift());
-			           weeklyDownloadEntries[6][1] = 0;
-			        }
-		          	weeklyDownloadEntries[6][1] += 1;
-		          	weeklyDownloadsJson = Object.fromEntries(weeklyDownloadEntries);
-	                alert("***" + JSON.stringify(weeklyDownloadsJson));	         
-		         }
-		         
-			     else {
-					 alert("weekly entries : " + weeklyDownloadEntries);
-		            weeklyDownloadsJson = {};
-		            alert("Days Offset * : " + daysOffset);
-		            
-		            for(var j = daysOffset; j != (daysOffset - 1 + 7) % 7; j = (j + 1) % 7) 
-		            	weeklyDownloadsJson[weeklyDownloadEntries[j][0]] = 0;   
-		       		
-		            weeklyDownloadsJson[weeklyDownloadEntries[j][0]] = 0;
-		            
-		        }
-		        
-		        alert("weeklyDownloads : " + JSON.stringify(weeklyDownloadsJson));
-			    
-			    
-			    
+				var labels = Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson));
+				var monthlyData = Object.values(monthlyDownloadsJson).concat([null]).concat(new Array(7).fill(null));
+   				var weeklyData = new Array(Object.entries(monthlyDownloadsJson).length).fill(null).concat([null]).concat(Object.values(weeklyDownloadsJson));
+   				
 			      
 			    var ctx1 = document.getElementById("downloads");
 			    var dwnldChart = new Chart(ctx1, {
 			        type: "line",
 			        data: {
-			            //labels: ["July", "August", "September", "", "", "Sat", "Sun", "Mon", "Tue", "Wed", "Thur", "Fri"],
-			            labels: Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson)),
+			            labels: labels,
 			            datasets: [{
 			                label: "Downloads in last 3 months",
-			                // Monthly data corresponding to the months
-			                //data: [30, 40, 100, null, null, null, null, null, null, null, null],
-			                data: Object.values(monthlyDownloadsJson).concat([null]).concat(new Array(7).fill(null)),
+			                data: monthlyData,
 			                borderColor: 'rgba(75, 192, 192, 1)',
 			                fill: false,
-			                yAxisID: 'y1',  // Reference the first Y-axis
+			                yAxisID: 'y1',  
 			            },
 			            {
 			                label: "Downloads in last 7 days",
-			                //data: [null, null, null, null, null, 6, 4, 5, 4, 3, 3, 5],
-			 				data: new Array(Object.values(monthlyDownloadsJson).length).fill(null).concat([null]).concat(Object.values(weeklyDownloadsJson)),
+			 				data: weeklyData,
 			                borderColor: 'rgba(153, 102, 255, 1)',
 			                fill: false,
-			                yAxisID: 'y2',  // Reference the second Y-axis (different scale)
+			                yAxisID: 'y2',  
 			            }]
 			        },
 			        options: {
@@ -498,45 +675,83 @@
 	
 	
 			 	
-	<script th:inline="javascript">
-	    function updateDownloadStats() {
-			alert("entered");
-		    monthlyDownloadsJson[currentMonthName] += 1;
-			alert("monthlyDownloads : " + JSON.stringify(monthlyDownloadsJson));
-						
-			lastDownloadedOn = today;
-	        lastDownloadedOn.setHours(0,0,0,0);
-	      
-	        totalDownloads += 1;
-	        alert("totalDownloads : " + totalDownloads);
+	<script th:inline="javascript" defer>
+	    function updateDownloadStats(event) {
+			alert("reached");
+			event.preventDefault();
+    		let today = new Date();
+			today.setHours(0,0,0,0);
+			alert("today : " + today);		
+			lastDownloadedOn = new Date(lastDownloadedOn);
+			lastDownloadedOn.setHours(0,0,0,0);
+	     	alert("last downloaded on : " + lastDownloadedOn);
+
+		  	let currentMonthName = today.toLocaleString('default', { month: 'long' });
+	   		var monthlyDownloadEntries = Object.entries(monthlyDownloadsJson);
+	      	alert("current month : " + currentMonthName);
+		  	if(monthlyDownloadEntries[monthlyDownloadEntries.length-1][0] !== currentMonthName) {
+		     	if(monthlyDownloadEntries.length === 4) 
+				    monthlyDownloadEntries.shift(); 
+			   	monthlyDownloadEntries.push([currentMonthName, 1]);
+			 	monthlyDownloadsJson = Object.fromEntries(monthlyDownloadEntries)
+			}
+			else 
+		      monthlyDownloadsJson[currentMonthName] += 1;
+	
+		  	let dateDifferenceInMilliseconds = today - lastDownloadedOn;
+		  	let daysElapsed = dateDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+		  	let daysOffset = daysElapsed % 7;
+		  	alert("daysElapsed : " + daysElapsed);
+			alert("daysOffset : " + daysOffset);
 	    
-	        dwnldChart.data.labels = Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson));
-	        dwnldChart.data.datasets[0].data = Object.values(monthlyDownloadsJson).concat([null]).concat(new Array(7).fill(null));
-	        dwnldChart.data.datasets[1].data = new Array(Object.entries(monthlyDownloadsJson).length).fill(null).concat([null]).concat(Object.values(weeklyDownloadsJson));
-	        dwnldChart.options.scales.x.title.text = 'Downloaded ' + totalDownloads + ' times';
-	        dwnldChart.update();
-	        
-	        
-	        const data = {
-	           monthlyDownloadsJson: monthlyDownloadsJson,
-	           weeklyDownloadsJson: weeklyDownloadsJson,
-	           totalDownloads: totalDownloads,
-	           lastDownloadedOn: lastDownloadedOn
-	        };
-		  	fetch('/update-download-stats', {
-		       method:'POST',
-		   	   headers: {
-		       'Content-Type': 'application/json',
-		       },
-		       body: JSON.stringify(data)
-		  	})
-		  	.then(response => response.json())
-		  	.then(alert('data fetched successfully!!'))
-		  	.catch(err => {
-		    	alert('Error :' + err)
-		  	});
-		  
-	}
+				    
+			var weeklyDownloadEntries = Object.entries(weeklyDownloadsJson);
+			alert("weekly Entries : " + weeklyDownloadEntries);
+	    	if(daysElapsed < 7) {
+	      		for(let i = 1; i <= daysElapsed; i++) {   
+	          		weeklyDownloadEntries.push(weeklyDownloadEntries.shift());
+	          		weeklyDownloadEntries[6][1] = 0;
+	          	}
+	      		weeklyDownloadEntries[6][1] += 1;
+	      		weeklyDownloadsJson = Object.fromEntries(weeklyDownloadEntries);
+	       	}
+			else {
+	      		weeklyDownloadsJson = {};
+	      		for(var j = daysOffset; j != (daysOffset - 1 + 7) % 7; j = (j + 1) % 7) 
+	         		weeklyDownloadsJson[weeklyDownloadEntries[j][0]] = 0;   
+	      
+	      		weeklyDownloadsJson[weeklyDownloadEntries[j][0]] = 1;
+	    	}
+	
+		    totalDownloads += 1;
+		    lastDownloadedOn = today;
+		    alert("total Downloads : " + totalDownloads);
+		    alert("last Downloaded on : " + lastDownloadedOn);
+		    dwnldChart.data.labels = Object.keys(monthlyDownloadsJson).concat([""]).concat(Object.keys(weeklyDownloadsJson));
+		    dwnldChart.data.datasets[0].data = Object.values(monthlyDownloadsJson).concat([null]).concat(new Array(7).fill(null));
+		    dwnldChart.data.datasets[1].data = new Array(Object.entries(monthlyDownloadsJson).length).fill(null).concat([null]).concat(Object.values(weeklyDownloadsJson));
+		    dwnldChart.options.scales.x.title.text = 'Downloaded ' + totalDownloads + ' times';
+		    dwnldChart.update();
+	    
+		    const data = {
+		      monthlyDownloadsJson: monthlyDownloadsJson,
+		      weeklyDownloadsJson: weeklyDownloadsJson,
+		      totalDownloads: totalDownloads,
+		      lastDownloadedOn: lastDownloadedOn
+		    };
+	    
+		    fetch('/update-download-stats', {
+					 method:'POST',
+					 headers: {
+					    'Content-Type': 'application/json',
+					 },
+					 body: JSON.stringify(data)
+				})
+			  .then(response => response.json())
+				.catch(err => {
+			});
+	    
+		}
 	</script>
 
 </body>
