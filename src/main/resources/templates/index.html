@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"> 
 <head>
     <meta charset="UTF-8">
-    <title>Welcome Page</title>
+    <title>Browser Extension Store</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"> 
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+    
     <style>  
 	.login {
 	  display:none;	
@@ -560,6 +562,8 @@
 	      <label for="pwd">Password:</label>
 	      <input type="text" name="pwd"/>
 	    </div>
+	    
+	    <a href="/oauth2/authorization/google">Login with Google</a>
 	    <button type="submit" id = "loginbtn" onclick="handlePostUserLogin()">login</button>
 	</div>  
 
