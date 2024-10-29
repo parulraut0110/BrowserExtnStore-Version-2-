@@ -14,7 +14,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/store", "/login",  "/css/**", "/js/**", "/images/**").permitAll()   // Allow these paths without login
+                .requestMatchers("/store", "/login", "/css/**", "/js/**", "/images/**").permitAll()   // Allow these paths without login
                 .anyRequest().authenticated()                       // Secure all other paths
             )
             .oauth2Login(oauth2 -> oauth2
