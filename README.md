@@ -12,6 +12,9 @@ BrowserExtensionStore is a Spring Boot-based application designed for managing a
 
 ![image](https://github.com/user-attachments/assets/ed933d78-ac0f-4e9c-9416-035477baac22)
 
+![image](https://github.com/user-attachments/assets/a16539de-b02d-49fb-91f2-aca11fb246c6)
+
+
 
 ## Features
 - **Upload Extensions**: Upload and store browser extensions as binary data (BLOB).
