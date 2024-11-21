@@ -3,12 +3,6 @@
 
 BrowserExtensionStore is a Spring Boot-based application designed for managing and storing browser extensions. This repository provides an API to upload, store, and manage extensions along with their metadata, including version history, upload date, and the extension's link to the Chrome Web Store.
 
-![image](https://github.com/user-attachments/assets/844aa948-9461-42e8-945e-329938f53b16)
-
-![image](https://github.com/user-attachments/assets/0e46236d-b4c6-4397-924e-6ce84d137644)
-
-![image](https://github.com/user-attachments/assets/4f16ebd9-69f3-4a23-a127-4cabc5d58201)
-
 ### can also log in with google: -
 
 ![image](https://github.com/user-attachments/assets/c23ab0cb-b72f-4a4f-a3dd-4c20564d3715)
@@ -17,6 +11,16 @@ BrowserExtensionStore is a Spring Boot-based application designed for managing a
 ![image](https://github.com/user-attachments/assets/ed933d78-ac0f-4e9c-9416-035477baac22)
 
 ![image](https://github.com/user-attachments/assets/a16539de-b02d-49fb-91f2-aca11fb246c6)
+
+### Search bar
+
+![image](https://github.com/user-attachments/assets/844aa948-9461-42e8-945e-329938f53b16)
+
+![image](https://github.com/user-attachments/assets/0e46236d-b4c6-4397-924e-6ce84d137644)
+
+![image](https://github.com/user-attachments/assets/4f16ebd9-69f3-4a23-a127-4cabc5d58201)
+
+
 
 
 
