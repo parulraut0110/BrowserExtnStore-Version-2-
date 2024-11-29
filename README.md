@@ -66,8 +66,6 @@ BrowserExtensionStore is a Spring Boot-based application designed for managing a
   Description: Uploads an extension file and saves metadata like name, version, and browser link.
 
 
-
-
 ## Privacy Policy
 
 At BrowserExtensionStore, we are committed to safeguarding the privacy of our users and developers. Below is our privacy policy:
