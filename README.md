@@ -4,7 +4,6 @@ BrowserExtensionStore is a Spring Boot-based application designed for managing a
 
 ### can also log in with google: -
 
-
 ![image](https://github.com/user-attachments/assets/c23ab0cb-b72f-4a4f-a3dd-4c20564d3715)
 
 
